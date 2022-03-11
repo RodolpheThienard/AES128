@@ -4,8 +4,8 @@ run: principal
 principal: main.o matrices.o decalelignes.o
 	gcc -Wall main.o matrices.o decalelignes.o -o main -g
 
-matrices.o: matrices.c matrices.h
-	gcc -Wall -c matrices.c -g
+compile: main.o suboctet.o
+	gcc -o main main.o SubOctet.o
 
 decalelignes.o: decalelignes.c decalelignes.h
 	gcc -Wall -c decalelignes.c -g
