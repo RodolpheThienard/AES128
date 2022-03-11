@@ -1,4 +1,4 @@
-#include "SubOctet.h"
+#include "suboctet.h"
 
 Block *create_list_block(char *str){
 
@@ -26,7 +26,7 @@ void print_list_block(Block *b,int nb_block){
           printf("\n");
           for(int i = 0 ; i < 4 ; i++){
                for(int j = 0; j < 4;j++){
-                    printf("%d ",b[k].matrice[i][j]); // Changer en %c pour avoir le message
+                    printf("%x ",b[k].matrice[i][j]); // Changer en %c pour avoir le message
                }
           }
      }

@@ -1,6 +1,7 @@
 #include "matrices.h"
-#include "SubOctet.h"
+#include "suboctet.h"
 #include "decalelignes.h"
+
 int main (int argc, char* argv[]){
 
      //Pour tester
