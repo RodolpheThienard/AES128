@@ -1,5 +1,5 @@
 run: principal
-	./main
+	./main matrices.txt
 
 principal: main.o matrices.o
 	gcc -Wall main.o matrices.o -o main -g
