@@ -13,6 +13,11 @@ void lecture(char *argv){
 
     while (fgets(ligne, 100, fic)){
         printf("%s", ligne);
+
+        char *token = strtok(ligne, " ");
+        int i = atoi("78");
+
+        printf("\ntoken : %s \natoi: %d\n", token, i);
     }
 
     fclose(fic);
