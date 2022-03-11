@@ -1,13 +1,16 @@
 run: principal
 	./main
 
-principal: main.o matrices.o
-	gcc -Wall main.o matrices.o -o main -g
+principal: main.o matrices.o decalelignes.o
+	gcc -Wall main.o matrices.o decalelignes.o -o main -g
 
 matrices.o: matrices.c matrices.h
 	gcc -Wall -c matrices.c -g
 
-main.o: main.c matrices.h
+decalelignes.o: decalelignes.c decalelignes.h
+	gcc -Wall -c decalelignes.c -g
+
+main.o: main.c matrices.h decalelignes.h
 	gcc -Wall -c main.c -g
 
 valgrind: principal
