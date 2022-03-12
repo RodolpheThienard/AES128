@@ -1,6 +1,6 @@
 CFLAGS = -Wall -Wextra -pedantic -std=c99
-OBJS = main.o matrices.o decalelignes.o suboctet.o
-BIN = main
+OBJS = src/main.o src/matrices/matrices.o src/decalelignes/decalelignes.o src/suboctet/suboctet.o src/addroundkey/addroundkey.o
+BIN = src/main
 
 run: $(BIN)
 	./$(BIN) matrices.txt
@@ -12,3 +12,4 @@ $(BIN): $(OBJS)
 
 clean:
 	$(RM) $(OBJS) $(BIN)
+	$(RM) vgcore.*
