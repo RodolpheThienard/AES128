@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+char* chainebinaire(char* s);
 void lecture(char *argv);
 
 #endif
