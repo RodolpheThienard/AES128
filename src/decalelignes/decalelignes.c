@@ -1,4 +1,4 @@
-#include "SubOctet.h"
+#include "../suboctet/suboctet.h"
 #include "decalelignes.h"
 
 void free_matrix(int x,int** tab){

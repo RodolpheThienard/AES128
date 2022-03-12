@@ -1,26 +1,15 @@
-run: principal
-	./main matrices.txt
+CFLAGS = -Wall -Wextra -pedantic -std=c99
+OBJS = src/main.o src/matrices/matrices.o src/decalelignes/decalelignes.o src/suboctet/suboctet.o src/addroundkey/addroundkey.o
+BIN = src/main
 
-principal: main.o matrices.o SubOctet.o decalelignes.o
-	gcc -Wall main.o matrices.o SubOctet.o decalelignes.o -o main -g
+run: $(BIN)
+	./$(BIN) matrices.txt
 
-compile: main.o suboctet.o 
-	gcc -o main main.o SubOctet.o
+valgrind: 
+	./valgrind --leak-check=full --show-leak-kinds=all ./$(BIN)
 
-decalelignes.o: decalelignes.c decalelignes.h
-	gcc -Wall -c decalelignes.c -g
-
-SubOctet.o: SubOctet.c SubOctet.h
-	gcc -Wall -c SubOctet.c -g
-
-main.o: main.c matrices.h decalelignes.h
-	gcc -Wall -c main.c -g
-
-valgrind: principal
-	valgrind --leak-check=full --show-leak-kinds=all ./main
-
+$(BIN): $(OBJS)
 
 clean:
-	rm -f *.o
-	rm -f main
-	ls -l
+	$(RM) $(OBJS) $(BIN)
+	$(RM) vgcore.*
