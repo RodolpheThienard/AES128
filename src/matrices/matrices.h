@@ -7,5 +7,6 @@
 
 char* chainebinaire(char* s);
 char *lecture(char *argv);
+void matrices(char *text);
 
 #endif

@@ -1,2 +1,2 @@
-Il faut que je fasse la lecture du fichier que je convertisse les mots en bianire avec la fonction atoi() ou en hexadecimal.
-Une fois ça fait il faut que j'ajoute le nombre de bits pour faire un bloc de 128 bits et le découpé en bloc et les mettent dans la matrice.
+abcdefghijkl
+mno

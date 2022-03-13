@@ -5,6 +5,7 @@
 
 int main (int argc, char* argv[]){
 
+     /*
      //Pour tester
      char *str = malloc(2048);
      strcpy(str,"Lorem ipsum dolor consectetur adipisicing elit. Vitae repellendus quod saepe eveniet asperiores nam et tenetur veniam delectus! Voluptas ");
@@ -20,9 +21,20 @@ int main (int argc, char* argv[]){
      Block *l_mat_etat = create_list_block(str);
      int nb_block = strlen(str)/16 + 1;
      print_list_block(l_mat_etat,nb_block);
+     */
 
-     //lecture(argv[1]);
+     if(argc != 2){
+          printf("Too many arguments or Too few arguments");
+          return 1;
+     }
+
+     char *binary = lecture(argv[1]);
+
+     matrices(binary);
+
+     free(binary);
     
+     /*
      SubOctet(l_mat_etat,nb_block);
      print_list_block(l_mat_etat,nb_block); //(2)
 
@@ -39,6 +51,7 @@ int main (int argc, char* argv[]){
      free(key);
      free(str);
      free(l_mat_etat);
-     
+     */
+
      return 0;
 }

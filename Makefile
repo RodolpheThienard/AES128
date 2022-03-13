@@ -6,7 +6,7 @@ run: $(BIN)
 	./$(BIN) matrices.txt
 
 valgrind: 
-	./valgrind --leak-check=full --show-leak-kinds=all ./$(BIN)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(BIN) matrices.txt
 
 $(BIN): $(OBJS)
 
