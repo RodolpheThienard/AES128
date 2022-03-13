@@ -1,6 +1,7 @@
 #include "matrices/matrices.h"
 #include "suboctet/suboctet.h"
 #include "decalelignes/decalelignes.h"
+#include "melangecolonnes/melangecolonnes.h"
 #include "addroundkey/addroundkey.h"
 
 int main (int argc, char* argv[]){
@@ -43,6 +44,9 @@ int main (int argc, char* argv[]){
 
      addroundkey(l_mat_etat, key, nb_block);
      print_list_block(l_mat_etat,nb_block); //(4)
+
+     MelangeColonnes(l_mat_etat,nb_block);
+     print_list_block(l_mat_etat,nb_block);
 
      for (int i = 0; i < 4; i++)
      {
