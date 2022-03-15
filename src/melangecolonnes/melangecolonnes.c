@@ -2,7 +2,8 @@
 #include "melangecolonnes.h"
 
 
-void MelangeColonnes(Block *l_mat_etat,int nb_block){
+void MelangeColonnes(int **matrix)
+{
     int operation_double[16][16] = {
                 0x00,0x02,0x04,0x06,0x08,0x0a,0x0c,0x0e,0x10,0x12,0x14,0x16,0x18,0x1a,0x1c,0x1e,
                 0x20,0x22,0x24,0x26,0x28,0x2a,0x2c,0x2e,0x30,0x32,0x34,0x36,0x38,0x3a,0x3c,0x3e,
@@ -41,29 +42,31 @@ void MelangeColonnes(Block *l_mat_etat,int nb_block){
                 0x0b,0x08,0xff,0x0e,0x07,0x04,0X01,0x02,0x13,0x10,0x15,0x16,0x1f,0x1c,0x19,0x1a,
         };
 
-        for (int i=0; i<nb_block;i++){
-            for (int y=0;y<4 ;i++){
-                int val1x = l_mat_etat[i].matrice[0][y]/16;
-                int val1y = l_mat_etat[i].matrice[0][y]%16;
-                int val2x = l_mat_etat[i].matrice[1][y]/16;
-                int val2y = l_mat_etat[i].matrice[1][y]%16;
-                l_mat_etat[i].matrice[0][y] = operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ l_mat_etat[i].matrice[2][y] ^ l_mat_etat[i].matrice[3][y];
-                val1x = l_mat_etat[i].matrice[1][y]/16;
-                val1y = l_mat_etat[i].matrice[1][y]%16;
-                val2x = l_mat_etat[i].matrice[2][y]/16;
-                val2y = l_mat_etat[i].matrice[2][y]%16;
-                l_mat_etat[i].matrice[1][y] = l_mat_etat[i].matrice[0][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ l_mat_etat[i].matrice[3][y];
-                val1x = l_mat_etat[i].matrice[2][y]/16;
-                val1y = l_mat_etat[i].matrice[2][y]%16;
-                val2x = l_mat_etat[i].matrice[3][y]/16;
-                val2y = l_mat_etat[i].matrice[3][y]%16;
-                l_mat_etat[i].matrice[2][y] = l_mat_etat[i].matrice[0][y] ^ l_mat_etat[i].matrice[1][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y];
-                val1x = l_mat_etat[i].matrice[3][y]/16;
-                val1y = l_mat_etat[i].matrice[3][y]%16;
-                val2x = l_mat_etat[i].matrice[0][y]/16;
-                val2y = l_mat_etat[i].matrice[0][y]%16;
-                l_mat_etat[i].matrice[3][y] = operation_triple[val2x][val2y] ^ l_mat_etat[i].matrice[1][y] ^ l_mat_etat[i].matrice[2][y] ^ operation_double[val1x][val1y];
-            }
+        for (int y = 0; y < 4 ; y++)
+        {
+
+
+
+            int val1x = matrix[0][y]/16;
+            int val1y = matrix[0][y]%16;
+            int val2x = matrix[1][y]/16;
+            int val2y = matrix[1][y]%16;
+            matrix[0][y] = operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ matrix[2][y] ^ matrix[3][y];
+            val1x = matrix[1][y]/16;
+            val1y = matrix[1][y]%16;
+            val2x = matrix[2][y]/16;
+            val2y = matrix[2][y]%16;
+            matrix[1][y] = matrix[0][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ matrix[3][y];
+            val1x = matrix[2][y]/16;
+            val1y = matrix[2][y]%16;
+            val2x = matrix[3][y]/16;
+            val2y = matrix[3][y]%16;
+            matrix[2][y] = matrix[0][y] ^ matrix[1][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y];
+            val1x = matrix[3][y]/16;
+            val1y = matrix[3][y]%16;
+            val2x = matrix[0][y]/16;
+            val2y = matrix[0][y]%16;
+            matrix[3][y] = operation_triple[val2x][val2y] ^ matrix[1][y] ^ matrix[2][y] ^ operation_double[val1x][val1y];
         }
     
 }

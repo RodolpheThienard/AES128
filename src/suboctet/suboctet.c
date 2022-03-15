@@ -1,38 +1,35 @@
 #include "suboctet.h"
 
-Block *create_list_block(char *str){
+int **create_list_block(char *str)
+{
 
-     Block *l_mat_etat = NULL;
-     int nb_block = strlen(str)/16 + 1;
-     l_mat_etat = malloc(sizeof(Block)*nb_block);
-     for(int k = 0;k < nb_block;k++){// Initialisation matrice
-          for(int i = 0 ; i < 4;i++){
-               for(int j = 0 ;j < 4;j++){
-                    l_mat_etat[k].matrice[i][j] = 0; 
-               }
-          }
-     } 
+     int **matrix = calloc(4, sizeof(int*)); 
+     int *row = calloc(4*4, sizeof(int));
+     for(int i = 0 ; i < 4;i++){
+          matrix[i] = row + i*4;  
+     }
+     
      int size = strlen(str);
      for(int i = 0 ;i < size; i++){
-          l_mat_etat[i/16].matrice[(i/4)%4][i%4]=(int)str[i]; // Partit pour remplir la matrice (1)
-          l_mat_etat[i/16].id = i/16;
+          matrix[(i/4)%4][i%4]=(int)str[i]; // Partit pour remplir la matrice (1)
           //printf("X[%d],Y[%d]\n",(i/4)%4,i%4);
      }
-     return l_mat_etat;
+     return matrix;
 }
 
-void print_list_block(Block *b,int nb_block){
-     for(int k = 0; k <nb_block;k++){
-          printf("\n");
-          for(int i = 0 ; i < 4 ; i++){
-               for(int j = 0; j < 4;j++){
-                    printf("%2x ",b[k].matrice[i][j]); // Changer en %c pour avoir le message
-               }
+void print_list_block(int **matrix)
+{
+     for(int i = 0 ; i < 4 ; i++){
+          for(int j = 0; j < 4;j++){
+               printf("%2x ",matrix[i][j]); // Changer en %c pour avoir le message
           }
+          printf("\n");
      }
+     printf("\n");
 }
 
-void SubOctet (Block *l_mat_etat,int nb_block){
+void SubOctet (int **matrix)
+{
      int x=0;
      int y=0;
      int val = 0;
@@ -56,15 +53,14 @@ void SubOctet (Block *l_mat_etat,int nb_block){
           0x8C,0xA1,0x89,0x0D,0xBF,0xE6,0X42,0x68,0x41,0x99,0x2D,0x0F,0xB0,0x54,0xBB,0x16,
      };
      
-     for(int k = 0;k < nb_block ;k++){
-          for(int i = 0;i < 4;i++){
-               for(int j = 0;j < 4;j++){
-                    val = l_mat_etat[k].matrice[i][j];
-                    x = val/16;
-                    y = val%16;
-                    if(val)l_mat_etat[k].matrice[i][j]= AES_table[x][y]; // Pour quand le block n'est pas complet
-               }
+     for(int i = 0;i < 4;i++){
+          for(int j = 0;j < 4;j++){
+               val = matrix[i][j];
+               x = val/16;
+               y = val%16;
+               if(val)matrix[i][j]= AES_table[x][y]; // Pour quand le block n'est pas complet
           }
      }
+     
 
 }
