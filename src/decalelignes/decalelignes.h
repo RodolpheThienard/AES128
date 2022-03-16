@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void DecaleLignes(int **matrix);
+int** DecaleLignes(int** matrix);
+void free_matrix(int x,int** matrix);
 
 #endif
