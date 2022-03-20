@@ -73,8 +73,6 @@ void matrices(char *text){
     int taille = strlen(text);
     int mod = taille / 8;
     printf("taille : %d\nmod : %d\n", taille, mod);
-
-    int *Block = malloc(sizeof(int*)*mod);
     int *hexa = malloc(sizeof(int*)*8);
     int cpt = 1;
 

@@ -1,13 +1,10 @@
 #include "suboctet.h"
+#include "../tools/tools.h"
 
 int **create_list_block(char *str)
 {
 
-     int ** matrix = malloc( 4*sizeof(int*));
-     for ( int i = 0; i<4; i++ )
-     {
-          matrix[i] = malloc( 4*sizeof(int));
-     }
+     int **matrix = create_matrix(4, 4);
      
      int size = strlen(str);
      for(int i = 0 ;i < size; i++)
@@ -16,19 +13,6 @@ int **create_list_block(char *str)
           //printf("X[%d],Y[%d]\n",(i/4)%4,i%4);
      }
      return matrix;
-}
-
-void print_list_block(int **matrix)
-{
-     for(int i = 0 ; i < 4 ; i++)
-     {
-          for(int j = 0; j < 4;j++)
-          {
-               printf("%2x ",matrix[i][j]); // Changer en %c pour avoir le message
-          }
-          printf("\n");
-     }
-     printf("\n");
 }
 
 void suboctet(int **matrix)
