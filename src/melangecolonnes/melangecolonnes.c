@@ -42,31 +42,16 @@ void MelangeColonnes(int **matrix)
                 0x0b,0x08,0xff,0x0e,0x07,0x04,0X01,0x02,0x13,0x10,0x15,0x16,0x1f,0x1c,0x19,0x1a,
         };
 
-        for (int y = 0; y < 4 ; y++)
+        for (unsigned i = 0; i < 4; ++i)
         {
-
-
-
-            int val1x = matrix[0][y]/16;
-            int val1y = matrix[0][y]%16;
-            int val2x = matrix[1][y]/16;
-            int val2y = matrix[1][y]%16;
-            matrix[0][y] = operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ matrix[2][y] ^ matrix[3][y];
-            val1x = matrix[1][y]/16;
-            val1y = matrix[1][y]%16;
-            val2x = matrix[2][y]/16;
-            val2y = matrix[2][y]%16;
-            matrix[1][y] = matrix[0][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y] ^ matrix[3][y];
-            val1x = matrix[2][y]/16;
-            val1y = matrix[2][y]%16;
-            val2x = matrix[3][y]/16;
-            val2y = matrix[3][y]%16;
-            matrix[2][y] = matrix[0][y] ^ matrix[1][y] ^ operation_double[val1x][val1y] ^ operation_triple[val2x][val2y];
-            val1x = matrix[3][y]/16;
-            val1y = matrix[3][y]%16;
-            val2x = matrix[0][y]/16;
-            val2y = matrix[0][y]%16;
-            matrix[3][y] = operation_triple[val2x][val2y] ^ matrix[1][y] ^ matrix[2][y] ^ operation_double[val1x][val1y];
+            matrix[0][i] =
+                    *(*operation_double + matrix[0][i]) ^ *(*operation_triple + matrix[1][i]) ^ matrix[2][i] ^ matrix[3][i];
+            matrix[1][i] =
+                    matrix[0][i] ^ *(*operation_double + matrix[1][i]) ^ *(*operation_triple + matrix[2][i]) ^ matrix[3][i];
+            matrix[2][i] =
+                    matrix[0][i] ^ matrix[1][i] ^ *(*operation_double + matrix[2][i]) ^ *(*operation_triple + matrix[3][i]);
+            matrix[3][i] =
+                    *(*operation_triple + matrix[0][i]) ^ matrix[1][i] ^ matrix[2][i] ^ *(*operation_double + matrix[3][i]);
         }
     
 }
