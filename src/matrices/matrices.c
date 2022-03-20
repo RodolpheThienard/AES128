@@ -47,7 +47,7 @@ char *lecture(char *argv){
     char *text = malloc(sizeof(char*)+1);
 
     while (fgets(ligne, 100, fic)){
-        printf("%s", ligne);
+        // printf("%s", ligne);
 
         char *binary = chainebinaire(ligne);
 
@@ -59,7 +59,7 @@ char *lecture(char *argv){
         
     }
 
-    printf("text: %s\n", text);
+    // printf("text: %s\n", text);
 
     fclose(fic);
 
@@ -72,7 +72,7 @@ void matrices(char *text){
 
     int taille = strlen(text);
     int mod = taille / 8;
-    printf("taille : %d\nmod : %d\n", taille, mod);
+    // printf("taille : %d\nmod : %d\n", taille, mod);
     int *hexa = malloc(sizeof(int*)*8);
     int cpt = 1;
 
@@ -81,7 +81,7 @@ void matrices(char *text){
             for(j=0;j<8;j++){
                 hexa[j] = text[j*cpt];
             }
-            printf("%dhexa : %ls\n", i,hexa);
+            // printf("%dhexa : %ls\n", i,hexa);
             cpt++;
         }
 
@@ -90,7 +90,7 @@ void matrices(char *text){
             for(j=0;j<8;j++){
                 temp += hexa[j];
             }
-            printf("Temp : %d\n", temp);
+            // printf("Temp : %d\n", temp);
         }
     }
 
