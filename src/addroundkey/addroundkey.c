@@ -11,5 +11,4 @@ void addroundkey(int **matrix, int **key)
                 matrix[i][j] = matrix[i][j] ^ key[i][j];
             }
         }
-    
 }

@@ -58,7 +58,7 @@ void key_extension(int **master_key, int **extended_key)
      }
 
      int *tampon = calloc(4, sizeof(int));
-     for (int i = 4; i < 11; i++)
+     for (int i = 4; i < 4 * (10 + 1); i++)
      {
                memcpy(tampon, extended_key[i-1], 16);
 
