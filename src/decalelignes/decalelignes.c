@@ -25,7 +25,7 @@
 // }
 
 //version pour une matrice seul
-int** DecaleLignes(int** matrix){
+int** decale_lignes(int** matrix){
     //on créait une nouvelle matrice pour pouvoir décaler les valeurs sans problemes
     int ** new_matrix = malloc( 4*sizeof(int*) );
     for ( int i = 0; i<4; i++ ){

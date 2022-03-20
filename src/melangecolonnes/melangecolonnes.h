@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void MelangeColonnes(int **matrix);
+void melange_colonnes(int **matrix);
 
 #endif
