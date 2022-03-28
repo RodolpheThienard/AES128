@@ -1,11 +1,6 @@
 #include "ctr.h"
 #include "../aes/aes.h"
 
-void encrypt()
-{
-
-}
-
 void counter_mode(int **matrix, int **extended_key, int **plaintext)
 {
     aes(matrix, extended_key);
