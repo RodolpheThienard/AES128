@@ -6,6 +6,8 @@ BIN = src/main
 run: $(BIN)
 	./$(BIN) matrices.txt
 
+interface: $(BIN)
+	python interface/app.py
 valgrind: 
 	valgrind --leak-check=full --show-leak-kinds=all  ./$(BIN) matrices.txt
 
