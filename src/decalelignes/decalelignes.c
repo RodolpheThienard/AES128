@@ -3,6 +3,8 @@
 #include "../tools/tools.h"
 
 void decale_lignes(int **matrix){
+    int** tmp = create_matrix(4, 4);
+    copy_matrix(matrix, tmp);
     for (int i = 0; i < 4; i++)
     {
         int tmp[4] = {matrix[i][0], matrix[i][1], matrix[i][2], matrix[i][3]};
@@ -11,4 +13,5 @@ void decale_lignes(int **matrix){
             matrix[i][j] = tmp[(j + i) % 4];
         }
     } 
+    free_matrix(tmp, 4);
 }
