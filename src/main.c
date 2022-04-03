@@ -131,7 +131,7 @@ int main (int argc, char **argv){
 
      free(str);
      free_matrix(plaintext, 4);
-     // free_matrix(matrix2, 4);
+     free_matrix(nonce_matrix, 4);
      free_matrix(extended_key, 44);
      free_matrix(master_key, 4);
 
