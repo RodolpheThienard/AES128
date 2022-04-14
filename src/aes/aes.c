@@ -1,12 +1,12 @@
-void aes(int **matrix, int **extended_key)
-{
-     addroundkey(matrix, extended_key);
-     for(int i = 1; i < 10; i++)
-     {
-          turn(matrix, extended_key + i*4);
-     }
-     last_turn(matrix, extended_key + 40);
-}
+#include "../matrices/matrices.h"
+#include "../suboctet/suboctet.h"
+#include "../decalelignes/decalelignes.h"
+#include "../melangecolonnes/melangecolonnes.h"
+#include "../addroundkey/addroundkey.h"
+#include "../key_extension/key_extension.h"
+#include "../tools/tools.h"
+#include "../ctr/ctr.h"
+
 
 void turn(int **matrix, int **key)
 {
@@ -21,4 +21,14 @@ void last_turn(int **matrix, int **key)
      suboctet(matrix);
      decale_lignes(matrix);
      addroundkey(matrix, key);
+}
+
+void aes(int **matrix, int **extended_key)
+{
+     addroundkey(matrix, extended_key);
+     for(int i = 1; i < 10; i++)
+     {
+          turn(matrix, extended_key + i*4);
+     }
+     last_turn(matrix, extended_key + 40);
 }

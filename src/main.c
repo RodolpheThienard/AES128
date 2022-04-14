@@ -6,6 +6,7 @@
 #include "key_extension/key_extension.h"
 #include "tools/tools.h"
 #include "ctr/ctr.h"
+#include "aes/aes.h"
 #include <pthread.h>
 
 int main (int argc, char **argv){
