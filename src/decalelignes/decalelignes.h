@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void DecaleLignes(Block* a, int nb_block);
+void decale_lignes(int** matrix);
 
 #endif

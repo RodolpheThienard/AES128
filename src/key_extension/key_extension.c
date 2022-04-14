@@ -1,21 +1,23 @@
-#include "suboctet.h"
-#include "../tools/tools.h"
+#include "key_extension.h"
 
-int **create_list_block(char *str)
+int rcon[10] = {
+     0x01, 0x02, 0x04, 0x08,
+     0x10, 0x20, 0x40, 0x80,
+     0x1b, 0x36
+};
+
+int *rotation_left(int *tampon)
 {
-
-     int **matrix = create_matrix(4, 4);
-     
-     int size = strlen(str);
-     for(int i = 0 ;i < size; i++)
+     int tmp = tampon[0];
+     for (int i = 0; i < 3; i++)
      {
-          matrix[(i/4)%4][i%4]=(int)str[i]; // Partit pour remplir la matrice (1)
-          //printf("X[%d],Y[%d]\n",(i/4)%4,i%4);
+          tampon[i] = tampon[i+1];
      }
-     return matrix;
+     tampon[3] = tmp;
+     return tampon;
 }
 
-void suboctet(int **matrix)
+int *suboctect_tampon(int *tampon) 
 {
      int aes_table[16][16] = {
           {0x63,0x7C,0x77,0x7B,0xF2,0x6B,0x6F,0xC5,0x30,0x01,0x67,0x2B,0xFE,0xD7,0xAB,0x76},
@@ -35,14 +37,46 @@ void suboctet(int **matrix)
           {0xE1,0xF8,0x98,0x11,0x69,0xD9,0X8E,0x94,0x9B,0x1E,0x87,0xE9,0xCE,0x55,0x28,0xDF},
           {0x8C,0xA1,0x89,0x0D,0xBF,0xE6,0X42,0x68,0x41,0x99,0x2D,0x0F,0xB0,0x54,0xBB,0x16},
      };
-     
-     for(int i = 0;i < 4;i++)
+
+     for(int i = 0; i < 4; i++)
      {
-          for(int j = 0;j < 4;j++)
+          tampon[i] = *(*aes_table + tampon[i]);
+     }
+          
+     return tampon;
+}
+
+void key_extension(int **master_key, int **extended_key)
+{
+     
+     for (int i = 0; i < 4; i++)
+     {
+          for (int j = 0; j < 4; j++)
           {
-               matrix[i][j] = *(*aes_table + matrix[i][j]);
+               extended_key[i][j] = master_key[i][j];
           }
      }
-     
 
+     int *tampon = calloc(4, sizeof(int));
+     for (int i = 4; i < 4 * (10 + 1); i++)
+     {
+               memcpy(tampon, extended_key[i-1], 16);
+
+               if (i % 4 == 0) 
+               {
+                    tampon = suboctect_tampon(rotation_left(tampon));
+                    for(int j = 0; j < 4; j++)
+                    {
+                         tampon[j] ^= rcon[j / 4];
+                    }
+               }
+          
+
+          for(int j = 0; j < 4; j++)
+          {
+               extended_key[i][j] = extended_key[i - 4][j] ^ tampon[j]; 
+          }
+
+     }
+     free(tampon);
 }
