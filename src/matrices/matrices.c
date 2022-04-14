@@ -95,6 +95,7 @@ void matrices(char *text){
             printf("Temp : %d\n", temp);
         }
     }
+    
 
     return ;
 }
