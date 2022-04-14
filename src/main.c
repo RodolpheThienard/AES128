@@ -25,6 +25,7 @@ int main (int argc, char **argv){
      // (void) argc;
      // (void) argv;
 
+     /*
      int **master_key = create_matrix(4, 4);
      int **extended_key = create_matrix(4, 44);
      int **nonce_matrix = create_matrix(4, 4);
@@ -80,22 +81,24 @@ int main (int argc, char **argv){
           }
      }
 
-          
+     */  
 
-     // if(argc != 2){
-     //      printf("Too many arguments or Too few arguments");
-     //      return 1;
-     // }
+     if(argc != 2){
+           printf("Too many arguments or Too few arguments");
+           return 1;
+     }
 
      // int **matrix2 = create_matrix(4, 4);
      // matrix2[0][1] = 0x64;
      // matrix2[0][2] = 0x65;
 
-     // // char *binary = lecture(argv[1]);
+     //        char *binary = lecture(argv[1]);
+     
+     creation_matrice(argv[1]);
 
-     // // matrices(binary);
+     //        matrices(binary);
 
-     // // free(binary);
+     //        free(binary);
      
      // print_matrix(matrix2, 4, 4);
      // printf("\n");
@@ -130,11 +133,11 @@ int main (int argc, char **argv){
      // fwrite(output, 1, sizeof(output), file);
 
 
-     free(str);
-     free_matrix(plaintext, 4);
-     free_matrix(nonce_matrix, 4);
-     free_matrix(extended_key, 44);
-     free_matrix(master_key, 4);
+     // free(str);
+     // free_matrix(plaintext, 4);
+     // free_matrix(nonce_matrix, 4);
+     // free_matrix(extended_key, 44);
+     // free_matrix(master_key, 4);
 
      return 0;
 }

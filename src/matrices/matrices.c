@@ -21,19 +21,6 @@ char* chainebinaire(char* s) {
     return binary;
 }
 
-int* binaire_hexa(int binary_number){
-    
-    int hexadecimal_number = 0, i = 1, remainder;
-
-    while (binary_number != 0)
-    {
-        remainder = binary_number % 10;
-        hexadecimal_number = hexadecimal_number + remainder * i;
-        i = i * 2;
-        binary_number = binary_number / 10;
-    }
-}
-
 char *lecture(char *argv){
 
     FILE *fic = fopen(argv, "r") ;
@@ -66,6 +53,62 @@ char *lecture(char *argv){
     return text;
 }
 
+void creation_matrice(char *argv)
+{
+    struct stat *stats; 
+    stats = malloc(sizeof(struct stat));
+
+    stat(argv, stats);
+    int taille = stats->st_size;
+
+    printf("%d\n",taille);
+
+    int nbr_matrice = taille / 16;
+    int verif = taille % 16;
+    if (verif > 0){
+        nbr_matrice++;
+    }
+    //printf("Nombre de matrices a faire : %d\n", nbr_matrice);
+
+    FILE *fic = fopen(argv, "r") ;
+    if (fic==NULL)
+    {
+        printf("Ouverture fichier impossible !");
+        return ;
+    }
+
+    char* contenu = malloc(sizeof(char*)*taille);
+    char temp[100];
+
+    while(fgets(temp, 100, fic)){
+        strcat(contenu, temp);
+    }
+    // printf("%staille : %ld\n", contenu, strlen(contenu));
+
+
+    char hexadecimal[(taille*2)+1];
+    //sprintf((char*)(hexadecimal),"%02X", contenu[1]);
+
+    int i,j; 
+    i=0;
+    j=0;
+    
+    while(contenu[j] != '\0')
+    {
+        sprintf((char*)(hexadecimal+i),"%02X", contenu[j]);
+        j+=1;
+        i+=2;
+    }
+    hexadecimal[i++] = '\0';
+    printf("Hexa: %s\n", hexadecimal);
+    //printf("hexa : %c%c contenu : %c\n", hexadecimal[0], hexadecimal[1], contenu[1]); //attention une lettre = 2 places dans hexadecimal
+
+    free(stats);
+    //free(temp);
+    free(contenu);
+    fclose(fic);
+}
+
 void matrices(char *text){
 
     int i,j;
@@ -81,7 +124,7 @@ void matrices(char *text){
             for(j=0;j<8;j++){
                 hexa[j] = text[j*cpt];
             }
-            // printf("%dhexa : %ls\n", i,hexa);
+            //printf("%dhexa : %ls\n", i,hexa);
             cpt++;
         }
 
@@ -90,10 +133,8 @@ void matrices(char *text){
             for(j=0;j<8;j++){
                 temp += hexa[j];
             }
-            // printf("Temp : %d\n", temp);
+            //printf("Temp : %d\n", temp);
         }
     }
     
-
-    return ;
 }
