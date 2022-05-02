@@ -23,10 +23,10 @@ void last_turn(int **matrix, int **key)
      addroundkey(matrix, key);
 }
 
-void aes(int **matrix, int **extended_key)
+void aes(int **matrix, int **extended_key, int turns)
 {
      addroundkey(matrix, extended_key);
-     for(int i = 1; i < 10; i++)
+     for(int i = 1; i < turns; i++)
      {
           turn(matrix, extended_key + i*4);
      }
