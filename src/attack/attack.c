@@ -25,7 +25,8 @@ struct init_matrix* define_attack_matrix()
         init->next = next_matrix;
         init = next_matrix;
     }
-
+    free_attack_matrix(init_matrix);
+    return define_attack_matrix(); // gestion erreur de génération.
 }
 
 
