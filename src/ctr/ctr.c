@@ -1,9 +1,9 @@
 #include "ctr.h"
 #include "../aes/aes.h"
 
-void counter_mode(int **matrix, int **extended_key, int **plaintext)
+void counter_mode(int **matrix, int **extended_key, int **plaintext, int turns)
 {
-    aes(matrix, extended_key);
+    aes(matrix, extended_key, turns);
     
     for(int i = 0; i < 4; i++)
     {
