@@ -7,6 +7,7 @@
 #include "tools/tools.h"
 #include "ctr/ctr.h"
 #include "aes/aes.h"
+#include "attack/attack.h"
 #include <pthread.h>
 
 int main (int argc, char **argv){
@@ -87,6 +88,12 @@ int main (int argc, char **argv){
            printf("Too many arguments or Too few arguments");
            return 1;
      }
+
+     
+     struct init_matrix *attack = define_attack_matrix();
+     printf("%d\n", attack->init->next->matrix[0][0]);
+
+     free_attack_matrix(attack);
 
      // int **matrix2 = create_matrix(4, 4);
      // matrix2[0][1] = 0x64;
