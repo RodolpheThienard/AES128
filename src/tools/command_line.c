@@ -32,9 +32,11 @@ void error_display(int error)
             break;
         case 2:
             printf("Error, Bad Format !\n");
+            goto help;
             break;
         case 3:
             printf("Welcome in the help list !\n");
+            goto help;
             break;
         case 4:
             break;

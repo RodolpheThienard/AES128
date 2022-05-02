@@ -10,7 +10,109 @@
 #include "attack/attack.h"
 #include <pthread.h>
 
-int main (int argc, char **argv){
+void aes_128(int argc, char **argv)
+{
+     int **master_key = create_matrix(4, 4);
+     int **extended_key = create_matrix(4, 44);
+     int **nonce_matrix = create_matrix(4, 4);
+
+     // Random key
+     int keys[4][4] = {
+            {0x49, 0x55, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49}
+     };
+
+     int random[4][4] = {
+            {0x49, 0x55, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49}
+     };
+
+     for (int i = 0; i < 4; i++)
+     {
+          for (int j = 0; j < 4; j++)
+          {
+               master_key[i][j] = keys[i][j];
+               nonce_matrix[i][j] = random[i][j];
+          }
+     }
+
+     key_extension(master_key, extended_key);
+
+
+     counter_mode(nonce_matrix, extended_key, "plaintext", 10);
+
+     free_matrix(nonce_matrix, 4);
+     free_matrix(extended_key, 44);
+     free_matrix(master_key, 4);
+}
+
+void aes_attack(int argc, char **argv)
+{
+     int **master_key = create_matrix(4, 4);
+     int **extended_key = create_matrix(4, 44);
+     int **nonce_matrix = create_matrix(4, 4);
+
+     // Random key
+     int keys[4][4] = {
+            {0x49, 0x55, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49}
+     };
+
+     int random[4][4] = {
+            {0x49, 0x55, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49},
+            {0x49, 0x49, 0x49, 0x49}
+     };
+
+     for (int i = 0; i < 4; i++)
+     {
+          for (int j = 0; j < 4; j++)
+          {
+               master_key[i][j] = keys[i][j];
+               nonce_matrix[i][j] = random[i][j];
+          }
+     }
+
+     key_extension(master_key, extended_key);
+
+     // ATTACK
+
+     struct init_matrix *attack = define_attack_matrix();
+
+     attack_4turns(attack);
+     
+    
+
+     // CTR 
+
+     //counter_mode(nonce_matrix, extended_key, attack->init->matrix, 4);
+
+     //print_matrix(attack->init->matrix, 4, 4);
+
+     free_matrix(nonce_matrix, 4);
+     free_matrix(extended_key, 44);
+     free_matrix(master_key, 4);
+     free_attack_matrix(attack);
+}
+
+int main(int argc, char **argv)
+{
+     printf("%c%c\n",0x49,0x55);
+     // creation_matrice(argv[1]);
+     // aes_128(argc, argv);
+     aes_attack(argc, argv);
+}
+
+
+int backup (int argc, char **argv)
+{
 
      // float nonce;
      // FILE *thermal;
@@ -26,7 +128,7 @@ int main (int argc, char **argv){
      // (void) argc;
      // (void) argv;
 
-     /*
+     
      int **master_key = create_matrix(4, 4);
      int **extended_key = create_matrix(4, 44);
      int **nonce_matrix = create_matrix(4, 4);
@@ -62,27 +164,34 @@ int main (int argc, char **argv){
      
 
      //Pour tester
-     char *str = malloc(2048);
-     strcpy(str,"je suis un genti");
+     // char *str = malloc(2048);
+     // strcpy(str,"je suis un genti");
      
-     int **plaintext = create_list_block(str);
+     // int **plaintext = create_list_block(str);
+
+
+     // ATTACK
+
+     struct init_matrix *attack = define_attack_matrix();
+
+     attack_4turns(attack);
+     
 
      // CTR 
 
-     counter_mode(nonce_matrix, extended_key, plaintext);
+     counter_mode(nonce_matrix, extended_key, attack->init->matrix, 4);
 
+     print_matrix(attack->init->matrix, 4, 4);
 
-     print_matrix(plaintext, 4, 4);
+     // for (int i =0; i < 4; i++)
+     // {
+     //      for (int j =0; j < 4; j++)
+     //      {
+     //           printf("%c \n", (plaintext[i][j]));
+     //      }
+     // }
 
-     for (int i =0; i < 4; i++)
-     {
-          for (int j =0; j < 4; j++)
-          {
-               printf("%c \n", (plaintext[i][j]));
-          }
-     }
-
-     */  
+     
 
      if(argc != 2){
            printf("Too many arguments or Too few arguments");
@@ -90,10 +199,8 @@ int main (int argc, char **argv){
      }
 
      
-     struct init_matrix *attack = define_attack_matrix();
-     printf("%d\n", attack->init->next->matrix[0][0]);
+     
 
-     free_attack_matrix(attack);
 
      // int **matrix2 = create_matrix(4, 4);
      // matrix2[0][1] = 0x64;
@@ -101,7 +208,7 @@ int main (int argc, char **argv){
 
      //        char *binary = lecture(argv[1]);
      
-     creation_matrice(argv[1]);
+     // creation_matrice(argv[1]);
 
      //        matrices(binary);
 
@@ -142,9 +249,10 @@ int main (int argc, char **argv){
 
      // free(str);
      // free_matrix(plaintext, 4);
-     // free_matrix(nonce_matrix, 4);
-     // free_matrix(extended_key, 44);
-     // free_matrix(master_key, 4);
+     free_matrix(nonce_matrix, 4);
+     free_matrix(extended_key, 44);
+     free_matrix(master_key, 4);
+     free_attack_matrix(attack);
 
      return 0;
 }

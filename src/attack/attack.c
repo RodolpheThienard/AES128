@@ -51,7 +51,7 @@ void free_chained_matrix(struct chained_matrix *matrix)
 }
 
 
-void attack_4tours(struct init_matrix *init)
+void attack_4turns(struct init_matrix *init)
 {
     int *table = calloc(256, 4);
     int j = 0;
@@ -64,7 +64,9 @@ void attack_4tours(struct init_matrix *init)
             table[j] = i;
             j++;
         }
-    } 
+    }
+    printf("%d\n",j) ;
+    printf("%d\n",table[j-1]) ;
 }
 
 
@@ -79,7 +81,7 @@ int xor(struct init_matrix *init)
             matrix = matrix->next;
             output ^= matrix->matrix[i/4][i%4]; 
         }
-        if(output) return 0;
+        if(output != 0) return 0;
     }
     return 1;
 }
