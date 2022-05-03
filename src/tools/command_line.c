@@ -43,9 +43,9 @@ void error_display(int error)
         default:
             help:
             printf("Usage : ./main [OPTION...] \n");
-            printf("\t-a        \t\tAttack mode\n");
+            printf("\t-a        \tAttack mode\n");
             printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
-            printf("\t-h        \t\tHelp page\n");
+            printf("\t-h        \tHelp page\n");
             break;
     }
 }

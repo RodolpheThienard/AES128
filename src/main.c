@@ -8,6 +8,7 @@
 #include "ctr/ctr.h"
 #include "aes/aes.h"
 #include "attack/attack.h"
+#include "tools/command_line.h"
 #include <pthread.h>
 
 void aes_128(int argc, char **argv)
@@ -58,7 +59,7 @@ void aes_attack(int argc, char **argv)
 
      // Random key
      int keys[4][4] = {
-            {0x49, 0x55, 0x49, 0x49},
+            {0x55, 0x55, 0x49, 0x49},
             {0x49, 0x49, 0x49, 0x49},
             {0x49, 0x49, 0x49, 0x49},
             {0x49, 0x49, 0x49, 0x49}
@@ -86,6 +87,13 @@ void aes_attack(int argc, char **argv)
 
      struct init_matrix *attack = define_attack_matrix();
 
+     struct chained_matrix *matrix = attack->init;
+     for(int i = 0; i < 256; i++)
+     {
+          aes(matrix->matrix, extended_key, 4);
+          matrix = matrix->next;
+     }
+
      attack_4turns(attack);
      
     
@@ -104,6 +112,10 @@ void aes_attack(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+     int error = command(argc, argv);
+     error_display(error);
+     if(error) return 0;
+     
      printf("%c%c\n",0x49,0x55);
      // creation_matrice(argv[1]);
      // aes_128(argc, argv);
