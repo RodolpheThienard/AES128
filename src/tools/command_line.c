@@ -8,10 +8,15 @@ int command(int argc, char **argv)
         if(!strcmp(argv[i], "-a"))
         {
             if(i == argc) return 2;
+            return 0;
         }
         if(!strcmp(argv[i], "-e"))
         {
             if(i == argc) return 2;
+            FILE *file = fopen(argv[i+1], "r");
+            if(!file) return 4;
+            fclose(file);
+            return 0;
         }
         if(!strcmp(argv[i], "-h"))
         {
@@ -39,13 +44,17 @@ void error_display(int error)
             goto help;
             break;
         case 4:
+            printf("Error, Bad file !\n");
             break;
-        default:
+        case 100:
             help:
             printf("Usage : ./main [OPTION...] \n");
             printf("\t-a        \tAttack mode\n");
             printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
             printf("\t-h        \tHelp page\n");
             break;
+        default:
+            break;
     }
+    
 }

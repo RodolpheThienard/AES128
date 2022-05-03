@@ -1,16 +1,6 @@
 #ifndef ATTACK_H
 #define ATTACK_H
-
-struct chained_matrix
-{
-    int **matrix;
-    struct chained_matrix *next;
-};
-
-struct init_matrix
-{
-    struct chained_matrix *init;   
-};
+#include "../tools/tools.h"
 
 struct init_matrix* define_attack_matrix();
 void free_attack_matrix(struct init_matrix *init);

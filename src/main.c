@@ -10,8 +10,41 @@
 #include "attack/attack.h"
 #include "tools/command_line.h"
 #include <pthread.h>
+#include <sys/stat.h>
 
-void aes_128(int argc, char **argv)
+struct init_matrix *init_plaintext(char *is_file)
+{
+     FILE *file = fopen(is_file, "r");
+     struct stat *file_stat = calloc(1, sizeof(struct stat));
+     stat(is_file, file_stat);
+     int size = file_stat->st_size;
+     int matrix_amount = size/16;
+     if(size%16 != 0) matrix_amount++;
+     printf("%d\t%d\t%c\n", size, matrix_amount,70);
+
+     struct chained_matrix *chained= calloc(1, sizeof(struct chained_matrix));
+     struct init_matrix *init = calloc(1, sizeof(struct init_matrix));
+     init->init = chained;
+     for(int i = 0; i < matrix_amount; i++)
+     {
+          int **current_matrix = create_matrix(4, 4);
+
+          for(int j = 0; j < 16; j++)
+          {
+               int val = fgetc(file);
+               if (val == EOF) current_matrix[j/4][j%4] = 0;
+               else current_matrix[j/4][j%4] = val;
+          }
+          struct chained_matrix *next_chained= calloc(1, sizeof(struct chained_matrix));
+          chained->matrix = current_matrix;
+          chained->next = next_chained;
+     }
+
+     return init;
+     
+}
+
+void aes_128(struct init_matrix *init)
 {
      int **master_key = create_matrix(4, 4);
      int **extended_key = create_matrix(4, 44);
@@ -43,8 +76,9 @@ void aes_128(int argc, char **argv)
 
      key_extension(master_key, extended_key);
 
+     struct chained_matrix *chained = init->init;
+     loop_ctr(chained, nonce_matrix, extended_key, chained, 10);
 
-     counter_mode(nonce_matrix, extended_key, "plaintext", 10);
 
      free_matrix(nonce_matrix, 4);
      free_matrix(extended_key, 44);
@@ -115,7 +149,10 @@ int main(int argc, char **argv)
      int error = command(argc, argv);
      error_display(error);
      if(error) return 0;
-     
+
+     struct init_matrix *all_text = text_block(argv[2]);
+     //print_matrix(all_text->init->matrix, 4, 4);
+
      printf("%c%c\n",0x49,0x55);
      // creation_matrice(argv[1]);
      // aes_128(argc, argv);
