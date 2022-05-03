@@ -4,10 +4,16 @@ OBJS = src/main.o src/matrices/matrices.o src/decalelignes/decalelignes.o src/su
 BIN = src/main
 
 run: $(BIN)
-	./$(BIN) matrices.txt
+	./$(BIN) -h
+
+enc:
+	./$(BIN) -e matrices.txt
+
+att:
+	./$(BIN) -a
 
 valgrind: 
-	valgrind --leak-check=full --show-leak-kinds=all  ./$(BIN) matrices.txt
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) -e matrices.txt
 
 $(BIN): $(OBJS)
 

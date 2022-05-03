@@ -35,13 +35,47 @@ struct init_matrix *init_plaintext(char *is_file)
                if (val == EOF) current_matrix[j/4][j%4] = 0;
                else current_matrix[j/4][j%4] = val;
           }
-          struct chained_matrix *next_chained= calloc(1, sizeof(struct chained_matrix));
           chained->matrix = current_matrix;
+          if(i == matrix_amount-1)
+          {
+               chained->next = NULL;
+               fclose(file);
+               free(file_stat);
+               return init;
+          }
+          struct chained_matrix *next_chained= calloc(1, sizeof(struct chained_matrix));
+          
           chained->next = next_chained;
+          chained = next_chained;
      }
-
+     fclose(file);
+     free(file_stat);
      return init;
      
+}
+
+int write_to_file(struct init_matrix *init)
+{
+     FILE *file = fopen("output.txt", "w");
+     struct chained_matrix *matrix = init->init;
+     char *output = calloc(16, sizeof(char));
+     int j = 0;
+     while(matrix)
+     {
+          j++;
+          output = realloc(output, j*16);
+          for(int i = 0; i < 16; i++)
+          {
+               sprintf(output, "%s%c", output, matrix->matrix[i/4][i%4]);
+               
+          }
+          matrix = matrix->next;
+          
+     }
+     fwrite(output, 16, j, file);
+     free(output);
+     fclose(file);
+     return 0;
 }
 
 void aes_128(struct init_matrix *init)
@@ -77,7 +111,7 @@ void aes_128(struct init_matrix *init)
      key_extension(master_key, extended_key);
 
      struct chained_matrix *chained = init->init;
-     loop_ctr(chained, nonce_matrix, extended_key, chained, 10);
+     loop_ctr(chained, nonce_matrix, extended_key, 10);
 
 
      free_matrix(nonce_matrix, 4);
@@ -150,13 +184,16 @@ int main(int argc, char **argv)
      error_display(error);
      if(error) return 0;
 
-     struct init_matrix *all_text = text_block(argv[2]);
-     //print_matrix(all_text->init->matrix, 4, 4);
+     struct init_matrix *all_text = init_plaintext(argv[2]);
 
      printf("%c%c\n",0x49,0x55);
      // creation_matrice(argv[1]);
-     // aes_128(argc, argv);
-     aes_attack(argc, argv);
+     aes_128(all_text);
+     //aes_attack(argc, argv);
+
+     write_to_file(all_text);
+
+     free_attack_matrix(all_text);
 }
 
 

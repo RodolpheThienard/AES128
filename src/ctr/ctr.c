@@ -1,6 +1,5 @@
 #include "ctr.h"
-#include "../aes/aes.h"
-#include "../tools/tools.h"
+
 
 void counter_mode(int **matrix, int **extended_key, int **plaintext, int turns)
 {
@@ -15,11 +14,12 @@ void counter_mode(int **matrix, int **extended_key, int **plaintext, int turns)
     }
 }
 
-void loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key, int **plaintext, int turns)
+void loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key, int turns)
 {
     while(chained->next)
     {
-        loop_ctr(chained, matrix, extended_key, chained, turns);
+        loop_ctr(chained->next, matrix, extended_key, turns);
+        break;
     }
     counter_mode(matrix, extended_key, chained->matrix, turns);
 }
