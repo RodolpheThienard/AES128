@@ -54,19 +54,26 @@ void free_chained_matrix(struct chained_matrix *matrix)
 void attack_4turns(struct init_matrix *init)
 {
     int *table = calloc(256, 4);
-    int j = 0;
+    int k = 0;
     struct chained_matrix *matrix = init->init;
-    for(int i = 0; i < 255; i++)
+    for(int i = 0; i < 256; i++)
     {
-        suboctet_inverse(matrix->matrix, i);
+        matrix = init->init;
+        for(int j = 0; j < 256; j++)
+        {
+            suboctet_inverse(matrix->matrix, i);
+            matrix = matrix->next;
+        }
         if(xor(init)) 
         {
-            table[j] = i;
-            j++;
+            table[k] = i;
+            k++;
         }
     }
-    printf("%d\n",j) ;
-    printf("%d\n",table[j-1]) ;
+    
+    printf("%d\n",k) ;
+    printf("%d\n",table[k-1]) ;
+    free(table);
 }
 
 
