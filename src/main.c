@@ -20,7 +20,7 @@ struct init_matrix *init_plaintext(char *is_file)
      int size = file_stat->st_size;
      int matrix_amount = size/16;
      if(size%16 != 0) matrix_amount++;
-     printf("%d\t%d\t%c\n", size, matrix_amount,70);
+     printf("%d\t%d\n", size, matrix_amount);
 
      struct chained_matrix *chained= calloc(1, sizeof(struct chained_matrix));
      struct init_matrix *init = calloc(1, sizeof(struct init_matrix));
@@ -32,7 +32,8 @@ struct init_matrix *init_plaintext(char *is_file)
           for(int j = 0; j < 16; j++)
           {
                int val = fgetc(file);
-               if (val == EOF) current_matrix[j/4][j%4] = 0;
+               printf("%2X\t%c\n", val, val);
+               if (val == EOF) current_matrix[j/4][j%4] = 255;
                else current_matrix[j/4][j%4] = val;
           }
           chained->matrix = current_matrix;
@@ -178,6 +179,16 @@ void aes_attack(int argc, char **argv)
      free_attack_matrix(attack);
 }
 
+void print_box(struct chained_matrix *n)
+{
+     while(n->next)
+     {
+          print_box(n->next);
+          break;
+     }
+     print_matrix(n->matrix, 4, 4);
+}
+
 int main(int argc, char **argv)
 {
      int error = command(argc, argv);
@@ -189,6 +200,12 @@ int main(int argc, char **argv)
      printf("%c%c\n",0x49,0x55);
      // creation_matrice(argv[1]);
      aes_128(all_text);
+     struct chained_matrix *n = all_text->init;
+     print_box(n);
+
+     aes_128(all_text);
+     print_box(n);
+
      //aes_attack(argc, argv);
 
      write_to_file(all_text);
