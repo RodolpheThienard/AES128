@@ -1,0 +1,16 @@
+AES:
+    Encodage:
+        ☐ Fetch
+        ☐ Key
+        ☐ Nonce
+        ☐ Writting
+        ☐ Define default output's value, updatable w -out
+    Decodage:
+        ☐ Fetch
+        ☐ Writting
+    ATTAQUE:
+        ✔ aes_table_inv @done(22-05-02 23:42)
+    Command line:
+        ☐ Add key option 16 char @started(22-05-05 16:58)
+        ☐ Do user interface if ./main
+
