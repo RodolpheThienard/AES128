@@ -3,7 +3,8 @@
 int command(int argc, char **argv)
 {
     if(argc < 3) return 1;
-    for(int i = 1; i < argc; i++)
+    if(strlen(argv[1]) != 16) return 5;
+    for(int i = 2; i < argc; i++)
     {
         if(!strcmp(argv[i], "-a"))
         {
@@ -44,11 +45,14 @@ void error_display(int error)
             goto help;
             break;
         case 4:
-            printf("Error, Bad file !\n");
+            printf("Error, Bad file's path !\n");
+            break;
+        case 5:
+            printf("Error, Bad key's format !\nThe key need to be in 128bits (16 chars)\n");
             break;
         case 100:
             help:
-            printf("Usage : ./main [OPTION...] \n");
+            printf("Usage : ./main [KEY] [OPTION...] \n");
             printf("\t-a        \tAttack mode\n");
             printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
             printf("\t-h        \tHelp page\n");

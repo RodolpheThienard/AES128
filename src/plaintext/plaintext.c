@@ -21,7 +21,7 @@ struct init_matrix *init_plaintext(char *is_file)
           {
                int val = fgetc(file);
                printf("%2X\t%c\n", val, val);
-               if (val == EOF) current_matrix[j/4][j%4] = 255;
+               if (val == EOF) current_matrix[j/4][j%4] = 0;
                else current_matrix[j/4][j%4] = val;
           }
           chained->matrix = current_matrix;
@@ -43,6 +43,16 @@ struct init_matrix *init_plaintext(char *is_file)
      
 }
 
+int **format_key(char *key)
+{
+     int **output = create_matrix(4, 4);
+     for(int i = 0; i < 16; i++)
+     {
+          output[i/4][i%4] = key[i];
+     }
+     return output;
+}
+
 int write_to_file(struct init_matrix *init)
 {
      FILE *file = fopen("output.txt", "w");
@@ -56,12 +66,15 @@ int write_to_file(struct init_matrix *init)
           for(int i = 0; i < 16; i++)
           {
                sprintf(output, "%s%c", output, matrix->matrix[i/4][i%4]);
-               
+               printf("%d", matrix->matrix[i/4][i%4]);
           }
           matrix = matrix->next;
           
      }
-     fwrite(output, 16, j, file);
+     printf("\n");
+     fwrite(output, j, 16, file);
+     printf("AH : %c\n", output[0]+256);
+
      free(output);
      fclose(file);
      return 0;

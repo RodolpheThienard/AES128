@@ -71,6 +71,7 @@ void creation_matrice(char *argv)
     //printf("Nombre de matrices a faire : %d\n", nbr_matrice);
 
     FILE *fic = fopen(argv, "r") ;
+    FILE *output = fopen("output.txt", "w") ;
     if (fic==NULL)
     {
         printf("Ouverture fichier impossible !");
@@ -101,6 +102,7 @@ void creation_matrice(char *argv)
     }
     hexadecimal[i++] = '\0';
     printf("Hexa: %s\n", hexadecimal);
+    fwrite(hexadecimal, stats->st_size, stats->st_size, output);
     //printf("hexa : %c%c contenu : %c\n", hexadecimal[0], hexadecimal[1], contenu[1]); //attention une lettre = 2 places dans hexadecimal
 
     free(stats);

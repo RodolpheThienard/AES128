@@ -5,19 +5,12 @@
 #include "plaintext/plaintext.h"
 #include "tools/command_line.h"
 
-void aes_128(struct init_matrix *init)
+void aes_128(struct init_matrix *init, int *master_key)
 {
-     int **master_key = create_matrix(4, 4);
      int **extended_key = create_matrix(4, 44);
      int **nonce_matrix = create_matrix(4, 4);
 
      // Random key
-     int keys[4][4] = {
-            {0x49, 0x55, 0x49, 0x49},
-            {0x49, 0x49, 0x49, 0x49},
-            {0x49, 0x49, 0x49, 0x49},
-            {0x49, 0x49, 0x49, 0x49}
-     };
 
      int random[4][4] = {
             {0x49, 0x55, 0x49, 0x49},
@@ -30,7 +23,6 @@ void aes_128(struct init_matrix *init)
      {
           for (int j = 0; j < 4; j++)
           {
-               master_key[i][j] = keys[i][j];
                nonce_matrix[i][j] = random[i][j];
           }
      }
@@ -43,7 +35,6 @@ void aes_128(struct init_matrix *init)
 
      free_matrix(nonce_matrix, 4);
      free_matrix(extended_key, 44);
-     free_matrix(master_key, 4);
 }
 
 void aes_attack(int argc, char **argv)
@@ -101,7 +92,6 @@ void aes_attack(int argc, char **argv)
 
      free_matrix(nonce_matrix, 4);
      free_matrix(extended_key, 44);
-     free_matrix(master_key, 4);
      free_attack_matrix(attack);
 }
 
@@ -121,21 +111,27 @@ int main(int argc, char **argv)
      error_display(error);
      if(error) return 0;
 
-     struct init_matrix *all_text = init_plaintext(argv[2]);
+     int **key = format_key(argv[1]);
+
+
+     print_matrix(key, 4, 4);
+
+     struct init_matrix *all_text = init_plaintext(argv[3]);
 
      printf("%c%c\n",0x49,0x55);
      // creation_matrice(argv[1]);
-     aes_128(all_text);
+     aes_128(all_text, key);
      struct chained_matrix *n = all_text->init;
      print_box(n);
 
-     aes_128(all_text);
-     print_box(n);
+     // aes_128(all_text, key);
+     // print_box(n);
 
      //aes_attack(argc, argv);
 
      write_to_file(all_text);
 
+     free_matrix(key, 4);
      free_attack_matrix(all_text);
 }
 

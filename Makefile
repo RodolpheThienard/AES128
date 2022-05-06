@@ -14,7 +14,7 @@ att:
 	./$(BIN) -a
 
 valgrind: 
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) -e matrices.txt
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" -e matrices.txt
 
 $(BIN): $(OBJS)
 

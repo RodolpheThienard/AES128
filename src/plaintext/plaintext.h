@@ -6,5 +6,6 @@
 
 struct init_matrix *init_plaintext(char *is_file);
 int write_to_file(struct init_matrix *init);
+int **format_key(char *key);
 
 #endif
