@@ -6,6 +6,7 @@
 \usepackage[a4paper]{geometry}
 \usepackage{babel}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \graphicspath{ {./screenshots/} }
 
 \usepackage[explicit]{titlesec}
@@ -65,11 +66,38 @@
 	
 	\subsection*{MelangeColonnes}
 	
-	
+	La fonction \verb|void melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice.
+	Les opérations sont les suivantes:
+	\begin{enumerate}
+		\vspace{0.5cm}
+		\item \hspace{2cm}
+		\begin{math}
+			B'_{0,1} = (2 \star B_{0,1}) \oplus (3 \star B_{1,1}) \oplus B_{2,1} \oplus B_{3,1}
+		\end{math} \\
+		La première ligne prendra la valeur de: l'octet renvoyé par la case correspondant à l'octet de la ligne 0 de cette colonne dans \verb|operation_double| XOR l'octet renvoyé par la case correspondant à l'octet de la ligne 1 dans \verb|operation_triple| XOR l'octet de la ligne 2 XOR l'octet de la ligne 3.
+		\vspace{0.5cm}
+		\item \hspace{2cm}
+		\begin{math}
+			B'_{1,1} = B_{0,1} \oplus (2 \star B_{1,1}) \oplus (3 \star B_{2,1}) \oplus B_{3,1}
+		\end{math} \\
+		La seconde prendra la valeur de: l'octet de la ligne 0 XOR  l'octet renvoyé par la case correspondant à l'octet de la ligne 1 dans \verb|operation_double| XOR l'octet renvoyé par la case correspondant à l'octet de la ligne 2 dans \verb|operation_triple| XOR l'octet de la ligne 3
+		\vspace{0.5cm}
+		\item \hspace{2cm}
+		\begin{math}
+			B'_{2,1} = B_{0,1} \oplus B_{1,1} (2 \star B_{2,1}) \oplus (3 \star B_{3,1})
+		\end{math} \\
+		La troisième prendra la valeur de: l'octet de la ligne 0 XOR l'octet de la ligne 1 XOR  l'octet renvoyé par la case correspondant à l'octet de la ligne 2 dans \verb|operation_double| XOR l'octet renvoyé par la case correspondant à l'octet de la ligne 3 dans \verb|operation_triple| 
+		\vspace{0.5cm}
+		\item \hspace{2cm}
+		\begin{math}
+			B'_{3,1} = (3 \star B_{0,1}) \oplus B_{1,1} \oplus B_{2,1} (2 \star B_{3,1})
+		\end{math} \\
+		La dernière prendra la valeur de: l'octet renvoyé par la case correspondant à l'octet de la ligne 0 dans \verb|operation_triple| XOR l'octet de la ligne 1 XOR l'octet de la ligne 2 XOR  l'octet renvoyé par la case correspondant à l'octet de la ligne 3 dans \verb|operation_double|
+	\end{enumerate}
 
 	\subsection*{AjouteCleTour}
 	
-	La fonction \verb|addroundkey(int *^*matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour : \\
+	La fonction \verb|addroundkey(int **matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour : \\
 	 \verb|matrix[i][j] = matrix[i][j] ^ key[i][j];| \\
 	 Comme les deux matrices sont en hexadécimales il existe le XOR en C qui est le : " \verb|^| ". 
 	
