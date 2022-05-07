@@ -3,3 +3,6 @@
 ./main
 vgcore.*
 src/main
+.aux
+.log
+.synctex.gz

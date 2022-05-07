@@ -1,0 +1,78 @@
+\documentclass[french, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{titling}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper]{geometry}
+\usepackage{babel}
+\usepackage{graphicx}
+\graphicspath{ {./screenshots/} }
+
+\usepackage[explicit]{titlesec}
+
+\titleformat{\section}
+{\normalfont\normalsize\bfseries\centering}{}{0em}{\MakeUppercase{#1}}
+
+\newcommand{\subtitle}[1]{%
+	\posttitle{%
+		\par\end{center}
+	\begin{center}\LARGE#1\end{center}
+	\vskip0.5em}%
+}
+
+\title{UE IN608N (CRYPTO): Attaque intégrale sur une
+	version réduite d’un AES-128 }
+\subtitle{Rapport IN608}
+\author{\hspace{-2cm}Docherty Ronan, Ejjed Zakaria, Gago Jérémy, Guerin Raphaël, Thienard Rodolphe}
+\date{10 Mai 2022}
+
+
+\begin{document}
+	\maketitle
+	\newpage
+
+	\section{\underline{Introduction}}
+
+	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C. Dans notre cas nous avons choisit le chiffrement CTR. Nous avons choisit le mode CTR pour des questions d'optimisations, car il est parallélisable et plus rapide que le mode OFB.\\
+	Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128 en mode de chiffrement CTR.
+	 
+	\section{\underline{Implémentation de l'AES-128}}
+	\subsection*{Gestion des commandes}
+	
+	Nous avons créer le fichier command.c et command.h pour faire la gestion des commandes. En fonction de la demande... \\
+	
+	Un tour d'AES-128 est composé de 4 fonctions : 
+	
+	
+	\begin{enumerate}
+		\item SubOctet : Substitue les octets de la matrice d'état.
+		\item DecaleLignes : Décale les lignes de la matrice d'état.
+		\item MelangeColonnes : Mélanges les colonnes de la matrice d'état.
+		\item AjouteCleTour : Ajoute la clé de tour à la matrice d'état.
+	\end{enumerate}
+  	 
+	 Nous commencerons donc par la fonction SubOctet puisque c'est la première fonction du tour.
+	
+	\subsection*{SubOctet}
+
+	La fonction \verb|void suboctet(int **matrix)|  nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
+		
+	\subsection*{DecaleLignes}
+	
+	La fonction \verb|decale_lignes(int **matrix);| permet de décaler les lignes de la matrice d'état en fonction de la ligne. Pour faire cela on créer une matrices (\verb|int **|) temporaire qui stockera le décalage des lignes. Ces modifications serons recopié dans la matrices d'état.
+	
+	\newpage
+	
+	\subsection*{MelangeColonnes}
+	
+	
+
+	\subsection*{AjouteCleTour}
+	
+	La fonction \verb|addroundkey(int *^*matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour : \\
+	 \verb|matrix[i][j] = matrix[i][j] ^ key[i][j];| \\
+	 Comme les deux matrices sont en hexadécimales il existe le XOR en C qui est le : " \verb|^| ". 
+	
+	\subsection*{Les Tours}
+
+\end{document}
