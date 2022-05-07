@@ -1,19 +1,22 @@
 CFLAGS = -Wall -Wextra -pedantic -std=c99 -g -O3
 OBJS = src/main.o src/matrices/matrices.o src/decalelignes/decalelignes.o src/suboctet/suboctet.o src/addroundkey/addroundkey.o \
 	src/melangecolonnes/melangecolonnes.o src/tools/tools.o src/key_extension/key_extension.o src/ctr/ctr.o src/aes/aes.o \
-	src/attack/attack.o src/tools/command_line.o src/plaintext/plaintext.o
+	src/attack/attack.o src/tools/command_line.o src/plaintext/plaintext.o src/tools/exec.o
 BIN = src/main
 
 run: $(BIN)
 	./$(BIN) -h
 
 enc:
-	./$(BIN) -e matrices.txt
+	./$(BIN) "thats my kung fu" -e matrices.txt
 
 att:
-	./$(BIN) -a
+	./$(BIN) "thats my kung fu" -a
 
 valgrind: 
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" -e matrices.txt
+
+valgrind-att: 
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" -e matrices.txt
 
 $(BIN): $(OBJS)

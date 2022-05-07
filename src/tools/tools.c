@@ -43,3 +43,13 @@ void print_matrix(int **matrix, int n, int m)
     }
 
 }
+
+void print_box(struct chained_matrix *n)
+{
+     while(n->next)
+     {
+          print_box(n->next);
+          break;
+     }
+     print_matrix(n->matrix, 4, 4);
+}

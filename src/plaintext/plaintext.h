@@ -3,9 +3,11 @@
 
 #include "../tools/tools.h"
 #include <sys/stat.h>
+#include <string.h>
 
-struct init_matrix *init_plaintext(char *is_file);
-int write_to_file(struct init_matrix *init);
+struct init_matrix *init_plaintext(FILE *file, char *filename);
+int write_to_file(struct init_matrix *init, char *outfile);
 int **format_key(char *key);
+
 
 #endif

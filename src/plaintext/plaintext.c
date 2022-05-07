@@ -1,14 +1,12 @@
 #include "plaintext.h"
 
-struct init_matrix *init_plaintext(char *is_file)
+struct init_matrix *init_plaintext(FILE *file, char *filename)
 {
-     FILE *file = fopen(is_file, "r");
      struct stat *file_stat = calloc(1, sizeof(struct stat));
-     stat(is_file, file_stat);
+     stat(filename, file_stat);
      int size = file_stat->st_size;
      int matrix_amount = size/16;
      if(size%16 != 0) matrix_amount++;
-     printf("%d\t%d\n", size, matrix_amount);
 
      struct chained_matrix *chained= calloc(1, sizeof(struct chained_matrix));
      struct init_matrix *init = calloc(1, sizeof(struct init_matrix));
@@ -20,7 +18,6 @@ struct init_matrix *init_plaintext(char *is_file)
           for(int j = 0; j < 16; j++)
           {
                int val = fgetc(file);
-               printf("%2X\t%c\n", val, val);
                if (val == EOF) current_matrix[j/4][j%4] = 0;
                else current_matrix[j/4][j%4] = val;
           }
@@ -28,7 +25,6 @@ struct init_matrix *init_plaintext(char *is_file)
           if(i == matrix_amount-1)
           {
                chained->next = NULL;
-               fclose(file);
                free(file_stat);
                return init;
           }
@@ -37,7 +33,6 @@ struct init_matrix *init_plaintext(char *is_file)
           chained->next = next_chained;
           chained = next_chained;
      }
-     fclose(file);
      free(file_stat);
      return init;
      
@@ -53,9 +48,9 @@ int **format_key(char *key)
      return output;
 }
 
-int write_to_file(struct init_matrix *init)
+int write_to_file(struct init_matrix *init, char *outfile)
 {
-     FILE *file = fopen("output.txt", "w");
+     FILE *output_file = fopen(outfile, "w");
      struct chained_matrix *matrix = init->init;
      char *output = calloc(16, sizeof(char));
      int j = 0;
@@ -65,17 +60,18 @@ int write_to_file(struct init_matrix *init)
           output = realloc(output, j*16);
           for(int i = 0; i < 16; i++)
           {
-               sprintf(output, "%s%c", output, matrix->matrix[i/4][i%4]);
-               printf("%d", matrix->matrix[i/4][i%4]);
+               // sprintf(output, "%s%c", output, matrix->matrix[i/4][i%4]);
+               // printf("%d", matrix->matrix[i/4][i%4]);
+               char tmp[1] = "";
+               tmp[0] = matrix->matrix[i/4][i%4];
+               strcat(output, tmp);
           }
           matrix = matrix->next;
           
      }
-     printf("\n");
-     fwrite(output, j, 16, file);
-     printf("AH : %c\n", output[0]+256);
+     fwrite(output, j, 16, output_file);
 
      free(output);
-     fclose(file);
+     fclose(output_file);
      return 0;
 }

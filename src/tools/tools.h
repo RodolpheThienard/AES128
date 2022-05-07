@@ -19,5 +19,6 @@ int **create_matrix(int n, int m);
 void copy_matrix(int **matrix, int **new_matrix);
 void print_matrix(int **matrix, int n, int m);
 void free_matrix(int **matrix, int n);
+void print_box(struct chained_matrix *n);
 
 #endif
