@@ -7,7 +7,7 @@
 #include "../plaintext/plaintext.h"
 #include "../key_extension/key_extension.h"
 
-void aes_128(struct init_matrix *init, int **master_key);
-void aes_attack(int **master_key);
+void aes_128(struct init_matrix *init, int **master_key, int **nonce);
+void aes_attack(int **master_key, int **nonce);
 
 #endif

@@ -38,7 +38,7 @@ struct init_matrix *init_plaintext(FILE *file, char *filename)
      
 }
 
-int **format_key(char *key)
+int **str_to_matrix(char *key)
 {
      int **output = create_matrix(4, 4);
      for(int i = 0; i < 16; i++)

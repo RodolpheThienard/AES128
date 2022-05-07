@@ -2,15 +2,19 @@ AES:
     Encodage:
         ✔ Fetch @done(22-05-07 11:32)
         ✔ Key @done(22-05-07 10:02)
-        ☐ Nonce
+        ☐ Nonce @started(22-05-07 12:27)
         ✔ Writting @done(22-05-07 11:32)
         ✔ Define default output's value, updatable w -out @done(22-05-07 11:32)
     Decodage:
         ✔ Fetch @done(22-05-07 11:32)
+        ☐ Nonce @started(22-05-07 12:27)
         ✔ Writting @done(22-05-07 11:32)
     ATTAQUE:
         ✔ aes_table_inv @done(22-05-02 23:42)
     Command line:
         ✔ Add key option 16 char @started(22-05-05 16:58) @done(22-05-07 11:32) @lasted(1d18h34m45s)
         ✘ Do user interface if ./main @cancelled(22-05-07 11:32)
+    Nonce: 
+        ☐ command to generate @started(22-05-07 12:27)
+        ☐ adding it to all functions
 

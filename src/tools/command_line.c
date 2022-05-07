@@ -1,22 +1,34 @@
 #include "command_line.h"
 #include "exec.h"
 #include "tools.h"
+#include "../nonce/nonce.h"
 
 int command(int argc, char **argv)
 {
-    if(argc < 3) return 1;
+    if(!strcmp(argv[1], "-h"))
+    {
+        return 3;
+    }
+    if(!strcmp(argv[1], "-nonce"))
+    {
+        char *nonce = get_nonce();
+        printf("your random nonce is : %s\n", nonce);
+        free(nonce);
+        return 0;
+    }
+    if(argc < 3) return 3;
     if(strlen(argv[1]) != 16) return 5;
+    if(strlen(argv[2]) != 16) return 6;
+    int **key = str_to_matrix(argv[1]);
+    int **nonce = str_to_matrix(argv[2]);
     for(int i = 2; i < argc; i++)
     {
         if(!strcmp(argv[i], "-a"))
         {
             if(i == argc - 1) return 1;
 
-            int **key = format_key(argv[1]);
-            aes_attack(key);
-            
-            free_matrix(key, 4);
-            return 0;
+            aes_attack(key, nonce);
+
         }
         if(!strcmp(argv[i], "-e"))
         {
@@ -39,24 +51,22 @@ int command(int argc, char **argv)
                 }
             }
 
-            int **key = format_key(argv[1]);
+            
             struct init_matrix *all_text = init_plaintext(file, argv[i+1] );
-            aes_128(all_text, key);
+            aes_128(all_text, key, nonce);
 
             write_to_file(all_text, outfile);
 
             fclose(file);
-            free_matrix(key, 4);
             free_attack_matrix(all_text);
             free(outfile);
             return 0;
         }
-        if(!strcmp(argv[i], "-h"))
-        {
-            return 3;
-        }
+        
         
     }
+    free_matrix(nonce, 4);
+    free_matrix(key, 4);
     return 0;
 }
 
@@ -84,9 +94,13 @@ void error_display(int error)
         case 5:
             printf("Error, Bad key's format !\nThe key need to be in 128bits (16 chars)\n");
             break;
+        case 6:
+            printf("Error, Bad nonce's format !\nThe nonce need to be in 128bits (16 chars)\nGenerate it with ./main -nonce\n");
+            break;
         case 100:
             help:
-            printf("Usage : ./main [KEY] [OPTION...] \n");
+            printf("Usage : ./main [KEY] [NONCE] [OPTION...] \n");
+            printf("\t-nonce    \tGenerate random nonce, no argument is require!\n\t\t\tex: ./main -nonce\n");
             printf("\t-a        \tAttack mode\n");
             printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
             printf("\t-out file \toutput filename, ONLY FOR -enc option\n");

@@ -7,7 +7,7 @@
 
 struct init_matrix *init_plaintext(FILE *file, char *filename);
 int write_to_file(struct init_matrix *init, char *outfile);
-int **format_key(char *key);
+int **str_to_matrix(char *key);
 
 
 #endif
