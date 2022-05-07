@@ -2,12 +2,12 @@ AES:
     Encodage:
         ✔ Fetch @done(22-05-07 11:32)
         ✔ Key @done(22-05-07 10:02)
-        ☐ Nonce @started(22-05-07 12:27)
+        ✔ Nonce @started(22-05-07 12:27) @done(22-05-07 16:05) @lasted(3h38m15s)
         ✔ Writting @done(22-05-07 11:32)
         ✔ Define default output's value, updatable w -out @done(22-05-07 11:32)
     Decodage:
         ✔ Fetch @done(22-05-07 11:32)
-        ☐ Nonce @started(22-05-07 12:27)
+        ✔ Nonce @started(22-05-07 12:27) @done(22-05-07 16:05) @lasted(3h38m14s)
         ✔ Writting @done(22-05-07 11:32)
     ATTAQUE:
         ✔ aes_table_inv @done(22-05-02 23:42)
@@ -16,5 +16,5 @@ AES:
         ✘ Do user interface if ./main @cancelled(22-05-07 11:32)
     Nonce: 
         ☐ command to generate @started(22-05-07 12:27)
-        ☐ adding it to all functions
+        ✔ adding it to all functions @done(22-05-07 15:47)
 
