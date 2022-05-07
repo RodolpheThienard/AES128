@@ -1,4 +1,3 @@
-#include "../matrices/matrices.h"
 #include "../suboctet/suboctet.h"
 #include "../decalelignes/decalelignes.h"
 #include "../melangecolonnes/melangecolonnes.h"
