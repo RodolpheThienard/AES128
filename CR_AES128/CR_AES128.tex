@@ -31,19 +31,33 @@
 \begin{document}
 	\maketitle
 	\newpage
+	
+	\renewcommand{\contentsname}{Sommaire} 
+	\tableofcontents
+	
+	\newpage
 
 	\section{\underline{Introduction}}
 
-	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C. Dans notre cas nous avons choisit le chiffrement CTR. Nous avons choisit le mode CTR pour des questions d'optimisations, car il est parallélisable et plus rapide que le mode OFB.\\
-	Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128 en mode de chiffrement CTR.
-	 
-	\section{\underline{Implémentation de l'AES-128}}
-	\subsection{Gestion des commandes}
+	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C.
+	Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128.
 	
-	Nous avons créer le fichier command.c et command.h pour faire la gestion des commandes. En fonction de la demande... \\
+	\part{\underline{Gestion des commandes et Makefile}}	
+	
+	Tout d'abord pour lancer le programme il vous suffit de taper \verb|make| dans le terminal. La commande \verb|make| vous affiche les différents arguments a mettre et les modes disponibles. Les arguments disponibles sont les suivant :
+	\begin{enumerate}
+		\item -a : qui permet de faire l'attaque.
+		\item -e : qui permet de faire l'encryptage et le décryptage d'un fichier.
+		\item -out : qui permet de nommer le fichier de sortie.
+		\item -h : qui permet d'afficher les aides.
+		\item -nonce : qui génère un nombre aléatoire pour le CTR.
+	\end{enumerate}
+	Dans le \verb|Makefile| il existe déjà des commandes types comme \verb|make enc| qui effectue un encryptage sur le fichier \verb|matrices.txt|.
+	Nous gérons aussi les erreurs possibles d'arguments, ainsi si les arguments nécessaire ne sont pas présent un message d'erreur apparaîtra.
+	 
+	\part{\underline{Implémentation de l'AES-128}}
 	
 	Un tour d'AES-128 est composé de 4 fonctions : 
-	
 	
 	\begin{enumerate}
 		\item SubOctet : Substitue les octets de la matrice d'état.
@@ -54,20 +68,26 @@
   	 
 	 Nous commencerons donc par la fonction SubOctet puisque c'est la première fonction du tour.
 	
-	\subsection{SubOctet}
+	\section{SubOctet}
 
 	La fonction \verb|void suboctet(int **matrix)|  nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
 		
-	\subsection{DecaleLignes}
+	\section{DecaleLignes}
 	
 	La fonction \verb|decale_lignes(int **matrix);| permet de décaler les lignes de la matrice d'état en fonction de la ligne. Pour faire cela on créer une matrices (\verb|int **|) temporaire qui stockera le décalage des lignes. Ces modifications serons recopié dans la matrices d'état.
 	
-	\newpage
+	\section{MelangeColonnes}
 	
-	\subsection{MelangeColonnes}
-	
-	La fonction \verb|void melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice.
-	Les opérations sont les suivantes:
+	La fonction \verb|void melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice. Les opérations sont les suivantes : \\\\
+	Avec B{x,y} l'octet contenu dans la ligne x et la colonne y de la matrice entré en argument, B' étant la matrice résultant des opérations,
+	\begin{math}
+		 2\star B{x,y}  
+	\end{math}
+	correspondant à l'octet renvoyé par la case de \verb|operation_double|, à la ligne égale à la première partie de l'octet renvoyé par B{x,y} et égale à la colonne de la deuxième partie de cet octet, idem pour 
+	\begin{math}
+		3\star B_{x,y} 
+	\end{math}
+	mais cette fois dans la matrice \verb|operation_triple|
 	\begin{enumerate}
 		\vspace{0.5cm}
 		\item \hspace{2cm}
@@ -95,18 +115,17 @@
 		La dernière prendra la valeur de: l'octet renvoyé par la case correspondant à l'octet de la ligne 0 dans \verb|operation_triple| XOR l'octet de la ligne 1 XOR l'octet de la ligne 2 XOR  l'octet renvoyé par la case correspondant à l'octet de la ligne 3 dans \verb|operation_double|
 	\end{enumerate}
 
-	\subsection{AjouteCleTour}
+	\section{AjouteCleTour}
 	
 	La fonction \verb|addroundkey(int **matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour : \\
 	 \verb|matrix[i][j] = matrix[i][j] ^ key[i][j];| \\
 	 Comme les deux matrices sont en hexadécimales il existe le XOR en C qui est le : " \verb|^| ". 
-	 \newpage
 	
-	\subsection{Les Tours}
+	\section{Les Tours}
 	
 	Pour les tours d'AES nous avons une fonction \verb|void turn(int matrix, int key)|, qui effectue les fonctions précédemment cité (dans le même ordre), nous avons ensuite une fonction  \verb|void last_turn(int matrix, int key)| qui effectue les même fonctions que \verb|turn| à part la fonction \verb|melange_colonne| et enfin \verb|void aes(int matrix, int extended_key, int turns)| qui effectue un nombre définit de fois la fonction \verb|turn| et qui termine par une itération de \verb|last_turn|, dans notre cas 10 tour.
 	
-	\subsection{Gestion des clé}
+	\section{Gestion des clé}
 	
 	L'AES-128 utilise 2 clés différentes : 
 	\begin{enumerate}
@@ -115,13 +134,13 @@
 	\end{enumerate}
 	La clé Maitre est donnée par l'utilisateur en entrée doit faire 128 bits. La clé de tour quand a elle n'est pas donné en entrée mais utilise la clé maitre pour être créer et change à chaque tour qu'effectue l'AES.
 	
-	\subsubsection{Clé Maitre}
+	\subsection{Clé Maitre}
 	Comme dit précédemment la clé maitre est la clé principale de l'AES-128. Cette clé est donnée par l'utilisateur et doit obligatoirement faire 128 bits. Cette clé est utilisé pour la création des clé de Tour. La clé Maitre étant donné en argument elle est de type \verb|char*|, nous avons donc créé une fonction qui convertit les \verb|char*| en matrices (en \verb|int **|). 
 	
-	\subsubsection{Clé de Tour}
+	\subsection{Clé de Tour}
 	Pour générer la clé de Tour nous avons besoin d'étendre la clé de maitre de 128 bits à 1408 bits. Puis chaque portion de 128 bits de la clé maitre étendue deviens une clé de tour. Comme il y a dix tours il y a 10 clé de tour, plus une pour le dernier tour. 
 	
-	\subsection{Chiffrement CTR}
+	\section{Chiffrement CTR}
 	
 	Pour faire le chiffrement CTR nous utilisons une fonction\\ \verb|void counter_mode(int matrix, int extended_key, int **plaintext, int turns)| qui après avoir fait des tours d'AES sur une matrice, XOR cette matrice avec une matrice contenant 16 bits de texte clair, nous utilisons aussi une fonction \verb|void loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle nous place à la fin du message clair et qui effectue la fonction \verb*|counter_mode| avec les bouts de texte clair autant de fois qu'il y'a de bouts.
 

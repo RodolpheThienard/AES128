@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  7 MAY 2022 22:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 17:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -386,69 +386,86 @@ Overfull \hbox (52.84358pt too wide) in paragraph at lines 32--32
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./CR_AES128.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 35.
+(Font)              <12> on input line 2.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 35.
+(Font)              <8> on input line 2.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 35.
+(Font)              <6> on input line 2.
+)
+\tf@toc=\write3
+\openout3 = `CR_AES128.toc'.
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+
+[2]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <24.88> on input line 45.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <20.74> on input line 45.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <17.28> on input line 45.
+
+Overfull \hbox (20.72682pt too wide) in paragraph at lines 45--45
+[]$[]$  
+ []
+
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
+7.
+(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [3]
+Underfull \hbox (badness 10000) in paragraph at lines 81--91
 
  []
 
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
-9.
-(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [2] [3]
-Overfull \hbox (17.58873pt too wide) in paragraph at lines 107--108
+[4]
+Overfull \hbox (17.58873pt too wide) in paragraph at lines 126--127
 []\T1/lmr/m/n/12 Pour les tours d'AES nous avons une fonc-tion [][]\T1/lmtt/m/n
 /12 void turn(int matrix, int key)[]\T1/lmr/m/n/12 ,
  []
 
 
-Overfull \hbox (204.39922pt too wide) in paragraph at lines 107--108
+Overfull \hbox (204.39922pt too wide) in paragraph at lines 126--127
 \T1/lmr/m/n/12 fonc-tions que [][]\T1/lmtt/m/n/12 turn []\T1/lmr/m/n/12 à part 
 la fonc-tion [][]\T1/lmtt/m/n/12 melange_colonne []\T1/lmr/m/n/12 et en-fin [][
 ]\T1/lmtt/m/n/12 void aes(int matrix, int extended_key, int turns)
  []
 
-
-Overfull \hbox (44.87155pt too wide) in paragraph at lines 126--127
+[5]
+Overfull \hbox (44.87155pt too wide) in paragraph at lines 145--146
 [][]\T1/lmtt/m/n/12 void counter_mode(int matrix, int extended_key, int **plain
 text, int turns)
  []
 
 
-Overfull \hbox (32.52155pt too wide) in paragraph at lines 126--127
+Overfull \hbox (32.52155pt too wide) in paragraph at lines 145--146
 [][]\T1/lmtt/m/n/12 void loop_ctr(struct chained_matrixchained, int matrix, int
  extended_key,
  []
 
-[4] [5] (./CR_AES128.aux) ) 
+[6] (./CR_AES128.aux) ) 
 Here is how much of TeX's memory you used:
- 4803 strings out of 483154
- 68255 string characters out of 5965024
- 322357 words of memory out of 5000000
- 19744 multiletter control sequences out of 15000+600000
- 570566 words of font info for 51 fonts, out of 8000000 for 9000
+ 4822 strings out of 483154
+ 68527 string characters out of 5965024
+ 323357 words of memory out of 5000000
+ 19759 multiletter control sequences out of 15000+600000
+ 590449 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  34i,6n,35p,601b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{
-/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips
-/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/te
-xmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lm
-mi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fo
-nts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb
-></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1
-/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/s
-hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on CR_AES128.pdf (5 pages, 150096 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr
+/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/
+lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/
+fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi12
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/
+type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></u
+sr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pub
+lic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share
+/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on CR_AES128.pdf (6 pages, 156492 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 65 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
