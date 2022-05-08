@@ -67,43 +67,50 @@ void attack_4turns(struct init_matrix *init)
 {
     int *table = calloc(256, 4);
     int k = 0;
-    for(int a = 0; a < 256; a++)
+
+    int** tmp = create_matrix(4, 4);
+    for(int i = 0; i < 16; i++)
     {
-        struct chained_matrix* matrix = copy_chained_matrix(init->init);
-        struct chained_matrix* head = matrix;
-        for(int j = 0; j < 256; j++)
-        {
-            suboctet_inverse(matrix->matrix, a);
-            matrix = matrix->next;
-        }
-        if(xor(head)) 
-        {
-            table[k] = a;
-            k++;
-        }
-        free_chained_matrix(head);
+        tmp[i/4][i%4] = 256;
     }
-    
+
+    for (int l = 0; l < 16; l++)
+    {
+       for(int a = 0; a < 256; a++)
+        {
+            struct chained_matrix* matrix = copy_chained_matrix(init->init);
+            struct chained_matrix* head = matrix;
+            for(int j = 0; j < 256; j++)
+            {
+                suboctet_inverse(matrix->matrix, a);
+                matrix = matrix->next;
+            }
+            if(xor(head,l/4,l%4)) 
+            {
+                table[k] = a;
+                tmp[l/4][l%4] = a;
+                k++;
+            }
+            free_chained_matrix(head);
+        }
+    }
+    print_matrix(tmp,4,4);
     printf("%d\n",k) ;
     if (k == 0) printf("No solution found\n");
     else printf("%d\n",table[k-1]) ;
     free(table);
 }
 
-
-int xor(struct chained_matrix *init)
+int xor(struct chained_matrix *init, int k, int l)
 {
-    for(int i = 0; i < 16; i++)
+    struct chained_matrix *matrix = init;
+    int output = matrix->matrix[k][l];
+    for(int j = 1; j < 256; j++)
     {
-        struct chained_matrix *matrix = init;
-        int output = matrix->matrix[i/4][i%4];
-        for(int j = 1; j < 256; j++)
-        {
-            matrix = matrix->next;
-            output ^= matrix->matrix[i/4][i%4]; 
-        }
-        if(output != 0) return 0;
+        matrix = matrix->next;
+        output ^= matrix->matrix[k][l]; 
     }
+    if(output != 0) return 0;
     return 1;
 }
 
