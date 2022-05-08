@@ -69,7 +69,7 @@ int write_to_file(struct init_matrix *init, char *outfile)
           matrix = matrix->next;
           
      }
-     fwrite(output, j, 16, output_file);
+     fprintf(output_file, "%s", output);
 
      free(output);
      fclose(output_file);
