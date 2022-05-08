@@ -7,20 +7,20 @@ BIN = src/main
 run: $(BIN)
 	./$(BIN) -h
 
-nonce:
+nonce: $(BIN)
 	./$(BIN) -nonce
 
-enc:
+enc: $(BIN)
 	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt
 
-att:
-	./$(BIN) "thats my kung fu" -a
+att: $(BIN)
+	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -a matrices.txt
 
-valgrind: 
+valgrind:  $(BIN)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt
 
-valgrind-att: 
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" -a matrices.txt
+valgrind-att: $(BIN)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -a matrices.txt
 
 $(BIN): $(OBJS)
 
