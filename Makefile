@@ -11,7 +11,7 @@ nonce: $(BIN)
 	./$(BIN) -nonce
 
 enc: $(BIN)
-	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt
+	./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh" -e matrices.txt -out matrices.txt
 
 att: $(BIN)
 	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -a matrices.txt

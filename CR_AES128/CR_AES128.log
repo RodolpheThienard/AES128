@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 19:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 23:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -426,39 +426,59 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--91
  []
 
 [4] [5]
-Overfull \hbox (13.99654pt too wide) in paragraph at lines 143--144
+Overfull \hbox (13.99654pt too wide) in paragraph at lines 143--145
 [][]\T1/lmtt/m/n/12 counter_mode(int matrix, int extended_key, int **plaintext,
  int turns)
  []
 
 
-Overfull \hbox (7.82153pt too wide) in paragraph at lines 143--144
+Overfull \hbox (7.82153pt too wide) in paragraph at lines 143--145
 [] []\T1/lmtt/m/n/12 loop_ctr(struct chained_matrixchained, int matrix, int ext
 ended_key,
  []
 
-[6] (./CR_AES128.aux) ) 
+
+Overfull \hbox (37.64713pt too wide) in paragraph at lines 147--151
+[][]\T1/lmtt/m/n/12 test.txt []\T1/lmr/m/n/12 avec la clé maitre [][]\T1/lmtt/m
+/n/12 "aes128 clemaitre" []\T1/lmr/m/n/12 en uti-li-sant la nonce [][]\T1/lmtt/
+m/n/12 azertyuiopqsdfgh
+ []
+
+
+Overfull \hbox (21.26147pt too wide) in paragraph at lines 154--158
+\T1/lmr/m/n/12 chier [][]\T1/lmtt/m/n/12 test.txt []\T1/lmr/m/n/12 avec la clé 
+maitre [][]\T1/lmtt/m/n/12 "aes128 clemaitre" []\T1/lmr/m/n/12 et la nonce [][]
+\T1/lmtt/m/n/12 azertyuiopqsdfgh[]\T1/lmr/m/n/12 .
+ []
+
+
+Overfull \hbox (38.69655pt too wide) in paragraph at lines 154--158
+[][]\T1/lmtt/m/n/12 loop_ctr(struct chained_matrix *chained, int **matrix, int 
+**extended_key,
+ []
+
+[6] [7] (./CR_AES128.aux) ) 
 Here is how much of TeX's memory you used:
- 4822 strings out of 483154
- 68527 string characters out of 5965024
+ 4824 strings out of 483154
+ 68550 string characters out of 5965024
  323357 words of memory out of 5000000
- 19759 multiletter control sequences out of 15000+600000
+ 19761 multiletter control sequences out of 15000+600000
  590449 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  34i,6n,35p,680b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr
-/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/
-lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/
-fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi12
-.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/
-type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></u
-sr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pub
-lic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share
-/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on CR_AES128.pdf (6 pages, 155820 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{
+/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips
+/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/te
+xmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+mi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fo
+nts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on CR_AES128.pdf (7 pages, 159224 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 47 compressed objects within 1 object stream
+ 70 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

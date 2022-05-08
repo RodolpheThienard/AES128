@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+// Permet de créer une nonce complétement aléatoire.
 char *get_nonce()
 {
     const char nonce_library[63] = "qazxswedcvfrtgbnhyujmkilop1234567890-_=+)*(&^%$!#@/?.,'\";]{[}:";

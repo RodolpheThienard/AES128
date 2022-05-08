@@ -1,6 +1,6 @@
 #include "ctr.h"
 
-
+// Permet de faire les 10 tours d'AES-128 et de chiffrer les matrices en faisant un XOR avec la nonce.
 void counter_mode(int **matrix, int **extended_key, int **plaintext, int turns)
 {
     aes(matrix, extended_key, turns);
@@ -14,6 +14,7 @@ void counter_mode(int **matrix, int **extended_key, int **plaintext, int turns)
     }
 }
 
+// Permet de faire le chiffrement CTR en nous plaçant au début de la liste chainée.
 void loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key, int turns)
 {
     while(chained->next)
