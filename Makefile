@@ -11,10 +11,10 @@ nonce:
 	./$(BIN) -nonce
 
 enc:
-	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt
+	./$(BIN) "thats my kung fu" "IUIIIIPOLIIIIIII" -e matrices.txt -out matrices.txt
 
 att:
-	./$(BIN) "thats my kung fu" -a
+	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -a matrices.txt
 
 valgrind: 
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt

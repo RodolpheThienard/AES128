@@ -57,7 +57,7 @@ int write_to_file(struct init_matrix *init, char *outfile)
      while(matrix)
      {
           j++;
-          output = realloc(output, j*16);
+          output = realloc(output, (j*16)+1);
           for(int i = 0; i < 16; i++)
           {
                // sprintf(output, "%s%c", output, matrix->matrix[i/4][i%4]);

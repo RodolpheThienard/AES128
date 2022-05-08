@@ -62,6 +62,7 @@ void attack_4turns(struct init_matrix *init)
         for(int j = 0; j < 256; j++)
         {
             suboctet_inverse(matrix->matrix, i);
+            // print_matrix(matrix->matrix, 4,4);
             matrix = matrix->next;
         }
         if(xor(init)) 
