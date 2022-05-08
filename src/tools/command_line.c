@@ -46,7 +46,7 @@ int command(int argc, char **argv)
                     if(j == argc - 1) return 1;
                     if(i == j) return 2;
                     printf("i : %d\tj : %d\t argc : %d\n", i, j, argc);
-                    outfile = realloc(outfile, strlen(argv[j+1]));
+                    outfile = realloc(outfile, strlen(argv[j+1])+1);
                     strcpy(outfile, argv[j+1]);
                 }
             }
@@ -57,6 +57,8 @@ int command(int argc, char **argv)
 
             write_to_file(all_text, outfile);
 
+            free_matrix(key,4);
+            free_matrix(nonce,4);
             fclose(file);
             free_attack_matrix(all_text);
             free(outfile);
