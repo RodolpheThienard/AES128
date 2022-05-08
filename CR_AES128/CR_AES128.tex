@@ -70,7 +70,7 @@
 	
 	\section{SubOctet}
 
-	La fonction \verb|void suboctet(int **matrix)|  nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
+	La fonction \verb|suboctet(int **matrix)| nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
 		
 	\section{DecaleLignes}
 	
@@ -78,7 +78,7 @@
 	
 	\section{MelangeColonnes}
 	
-	La fonction \verb|void melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice. Les opérations sont les suivantes : \\\\
+	La fonction \verb|melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice. Les opérations sont les suivantes : \\\\
 	Avec B{x,y} l'octet contenu dans la ligne x et la colonne y de la matrice entré en argument, B' étant la matrice résultant des opérations,
 	\begin{math}
 		 2\star B{x,y}  
@@ -117,13 +117,11 @@
 
 	\section{AjouteCleTour}
 	
-	La fonction \verb|addroundkey(int **matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour : \\
-	 \verb|matrix[i][j] = matrix[i][j] ^ key[i][j];| \\
-	 Comme les deux matrices sont en hexadécimales il existe le XOR en C qui est le : " \verb|^| ". 
+	La fonction \verb|addroundkey(int **matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour.
 	
 	\section{Les Tours}
 	
-	Pour les tours d'AES nous avons une fonction \verb|void turn(int matrix, int key)|, qui effectue les fonctions précédemment cité (dans le même ordre), nous avons ensuite une fonction  \verb|void last_turn(int matrix, int key)| qui effectue les même fonctions que \verb|turn| à part la fonction \verb|melange_colonne| et enfin \verb|void aes(int matrix, int extended_key, int turns)| qui effectue un nombre définit de fois la fonction \verb|turn| et qui termine par une itération de \verb|last_turn|, dans notre cas 10 tour.
+	Pour les tours d'AES nous avons une fonction \verb|turn(int matrix, int key)|, qui effectue les fonctions précédemment cité (dans le même ordre), nous avons ensuite une fonction  \verb|last_turn(int matrix, int key)| qui effectue les même fonctions que \verb|turn| à part la fonction \verb|melange_colonne| et enfin \\ \verb|aes(int matrix, int extended_key, int turns)| qui effectue un nombre définit de fois la fonction \verb|turn| et qui termine par une itération de \verb|last_turn|, dans notre cas 10 tour.
 	
 	\section{Gestion des clé}
 	
@@ -132,16 +130,16 @@
 		\item - \textbf{La clé Maitre}
 		\item - \textbf{La clé de Tour}
 	\end{enumerate}
-	La clé Maitre est donnée par l'utilisateur en entrée doit faire 128 bits. La clé de tour quand a elle n'est pas donné en entrée mais utilise la clé maitre pour être créer et change à chaque tour qu'effectue l'AES.
+	La clé Maitre est donnée par l'utilisateur en entrée et doit faire 128 bits. La clé de tour quand a elle n'est pas donné en entrée mais utilise la clé maitre pour être créer et change à chaque tour qu'effectue l'AES.
 	
 	\subsection{Clé Maitre}
-	Comme dit précédemment la clé maitre est la clé principale de l'AES-128. Cette clé est donnée par l'utilisateur et doit obligatoirement faire 128 bits. Cette clé est utilisé pour la création des clé de Tour. La clé Maitre étant donné en argument elle est de type \verb|char*|, nous avons donc créé une fonction qui convertit les \verb|char*| en matrices (en \verb|int **|). 
+	Comme dit précédemment la clé maitre est la clé principale de l'AES-128. Cette clé est donnée par l'utilisateur et doit obligatoirement faire 128 bits. Cette clé est utilisé pour la création des clé de Tour. La clé Maitre étant donné en argument elle est de type \verb|char*|, nous avons donc créé une fonction qui convertit les \verb|char*| en matrices (en \verb|int **|) \verb|str_to_matrix(char *key)|. 
 	
 	\subsection{Clé de Tour}
-	Pour générer la clé de Tour nous avons besoin d'étendre la clé de maitre de 128 bits à 1408 bits. Puis chaque portion de 128 bits de la clé maitre étendue deviens une clé de tour. Comme il y a dix tours il y a 10 clé de tour, plus une pour le dernier tour. 
+	Pour générer la clé de Tour nous avons besoin d'étendre la clé de maitre de 128 bits à 1408 bits. Puis chaque portion de 128 bits de la clé maitre étendue deviens une clé de tour. Comme il y a dix tours il y a 10 clé de tour, plus une pour le dernier tour. La clé de tour est donc généré chaque tour par la fonction \verb|key_extension(int **master_key, int **extended_key)| qui à partir de la clé maitre effectue un SubOctet sur la RotationOctet d'une clé tampon puis un XOR avec les constantes Rcon. L'action RotationOctet est effectué dans \verb|rotation_left(int *tampon)| et les constantes Rcon dans un variable du même nom.
 	
 	\section{Chiffrement CTR}
 	
-	Pour faire le chiffrement CTR nous utilisons une fonction\\ \verb|void counter_mode(int matrix, int extended_key, int **plaintext, int turns)| qui après avoir fait des tours d'AES sur une matrice, XOR cette matrice avec une matrice contenant 16 bits de texte clair, nous utilisons aussi une fonction \verb|void loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle nous place à la fin du message clair et qui effectue la fonction \verb*|counter_mode| avec les bouts de texte clair autant de fois qu'il y'a de bouts.
+	Pour faire le chiffrement CTR nous utilisons une fonction\\ \verb|counter_mode(int matrix, int extended_key, int **plaintext, int turns)| qui après avoir fait des tours d'AES sur une matrice, XOR cette matrice avec une matrice contenant 16 bits de texte clair, nous utilisons aussi une fonction \verb| loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle nous place à la fin du message clair et qui effectue la fonction \verb|counter_mode| avec les bouts de texte clair autant de fois qu'il y'a de bouts.
 
 \end{document}

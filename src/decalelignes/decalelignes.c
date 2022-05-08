@@ -2,6 +2,7 @@
 #include "decalelignes.h"
 #include "../tools/tools.h"
 
+// La fonction decale_lignes permet d'effectué le decalage des lignes en fonction de la ligne
 void decale_lignes(int **matrix){
     int** tmp = create_matrix(4, 4);
     copy_matrix(tmp, matrix);

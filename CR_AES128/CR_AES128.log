@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 17:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 19:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -414,34 +414,27 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
 7.
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [3]
+)
+Overfull \hbox (5.50108pt too wide) in paragraph at lines 73--74
+[]\T1/lmr/m/n/12 La fonc-tion [][]\T1/lmtt/m/n/12 suboctet(int **matrix) []\T1/
+lmr/m/n/12 nous per-met de sub-sti-tuer l'oc-tet contenu
+ []
+
+[3]
 Underfull \hbox (badness 10000) in paragraph at lines 81--91
 
  []
 
-[4]
-Overfull \hbox (17.58873pt too wide) in paragraph at lines 126--127
-[]\T1/lmr/m/n/12 Pour les tours d'AES nous avons une fonc-tion [][]\T1/lmtt/m/n
-/12 void turn(int matrix, int key)[]\T1/lmr/m/n/12 ,
+[4] [5]
+Overfull \hbox (13.99654pt too wide) in paragraph at lines 143--144
+[][]\T1/lmtt/m/n/12 counter_mode(int matrix, int extended_key, int **plaintext,
+ int turns)
  []
 
 
-Overfull \hbox (204.39922pt too wide) in paragraph at lines 126--127
-\T1/lmr/m/n/12 fonc-tions que [][]\T1/lmtt/m/n/12 turn []\T1/lmr/m/n/12 à part 
-la fonc-tion [][]\T1/lmtt/m/n/12 melange_colonne []\T1/lmr/m/n/12 et en-fin [][
-]\T1/lmtt/m/n/12 void aes(int matrix, int extended_key, int turns)
- []
-
-[5]
-Overfull \hbox (44.87155pt too wide) in paragraph at lines 145--146
-[][]\T1/lmtt/m/n/12 void counter_mode(int matrix, int extended_key, int **plain
-text, int turns)
- []
-
-
-Overfull \hbox (32.52155pt too wide) in paragraph at lines 145--146
-[][]\T1/lmtt/m/n/12 void loop_ctr(struct chained_matrixchained, int matrix, int
- extended_key,
+Overfull \hbox (7.82153pt too wide) in paragraph at lines 143--144
+[] []\T1/lmtt/m/n/12 loop_ctr(struct chained_matrixchained, int matrix, int ext
+ended_key,
  []
 
 [6] (./CR_AES128.aux) ) 
@@ -452,7 +445,7 @@ Here is how much of TeX's memory you used:
  19759 multiletter control sequences out of 15000+600000
  590449 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 34i,6n,35p,601b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,6n,35p,680b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr
 /share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/
 lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/
@@ -462,7 +455,7 @@ type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pub
 lic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on CR_AES128.pdf (6 pages, 156492 bytes).
+Output written on CR_AES128.pdf (6 pages, 155820 bytes).
 PDF statistics:
  65 PDF objects out of 1000 (max. 8388607)
  47 compressed objects within 1 object stream

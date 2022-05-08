@@ -1,11 +1,13 @@
 #include "key_extension.h"
 
+// Les constantes rcon
 int rcon[10] = {
      0x01, 0x02, 0x04, 0x08,
      0x10, 0x20, 0x40, 0x80,
      0x1b, 0x36
 };
 
+// La fonction RotationOctet qui effectue une rotation gauche de tampon
 int *rotation_left(int *tampon)
 {
      int tmp = tampon[0];
@@ -17,6 +19,7 @@ int *rotation_left(int *tampon)
      return tampon;
 }
 
+// La fonction SubOctet(Rotation(tampon))
 int *suboctect_tampon(int *tampon) 
 {
      int aes_table[16][16] = {
@@ -46,9 +49,10 @@ int *suboctect_tampon(int *tampon)
      return tampon;
 }
 
+// La fonction ExtensionCle qui effectue l'extension de la clé maitre.
 void key_extension(int **master_key, int **extended_key)
 {
-     
+     // On affecte les valeurs à la clé étendue
      for (int i = 0; i < 4; i++)
      {
           for (int j = 0; j < 4; j++)
@@ -57,16 +61,20 @@ void key_extension(int **master_key, int **extended_key)
           }
      }
 
+     // On créer la matrice tampon
      int *tampon = calloc(4, sizeof(int));
      for (int i = 4; i < 4 * (10 + 1); i++)
-     {
+     {         
+               // On copie la clé étendue dans la clé tampon
                memcpy(tampon, extended_key[i-1], 16);
 
                if (i % 4 == 0) 
                {
+                    // On effectue SubOctet(RotationOctet(tampon))
                     tampon = suboctect_tampon(rotation_left(tampon));
                     for(int j = 0; j < 4; j++)
                     {
+                         // On fait le Xor
                          tampon[j] ^= rcon[j / 4];
                     }
                }
