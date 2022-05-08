@@ -51,37 +51,51 @@ void free_chained_matrix(struct chained_matrix *matrix)
 }
 
 
+struct chained_matrix* copy_chained_matrix(struct chained_matrix *matrix)
+{
+    struct chained_matrix *new_matrix = calloc(1, sizeof(struct chained_matrix));
+    new_matrix->matrix = create_matrix(4, 4);
+    copy_matrix(new_matrix->matrix, matrix->matrix);
+    if(matrix->next)
+    {
+        new_matrix->next = copy_chained_matrix(matrix->next);
+    }
+    return new_matrix;
+}
+
 void attack_4turns(struct init_matrix *init)
 {
     int *table = calloc(256, 4);
     int k = 0;
-    struct chained_matrix *matrix = init->init;
-    for(int i = 0; i < 256; i++)
+    for(int a = 0; a < 256; a++)
     {
-        matrix = init->init;
+        struct chained_matrix* matrix = copy_chained_matrix(init->init);
+        struct chained_matrix* head = matrix;
         for(int j = 0; j < 256; j++)
         {
-            suboctet_inverse(matrix->matrix, i);
+            suboctet_inverse(matrix->matrix, a);
             matrix = matrix->next;
         }
-        if(xor(init)) 
+        if(xor(head)) 
         {
-            table[k] = i;
+            table[k] = a;
             k++;
         }
+        free_chained_matrix(head);
     }
     
     printf("%d\n",k) ;
-    printf("%d\n",table[k-1]) ;
+    if (k == 0) printf("No solution found\n");
+    else printf("%d\n",table[k-1]) ;
     free(table);
 }
 
 
-int xor(struct init_matrix *init)
+int xor(struct chained_matrix *init)
 {
     for(int i = 0; i < 16; i++)
     {
-        struct chained_matrix *matrix = init->init;
+        struct chained_matrix *matrix = init;
         int output = matrix->matrix[i/4][i%4];
         for(int j = 1; j < 256; j++)
         {
