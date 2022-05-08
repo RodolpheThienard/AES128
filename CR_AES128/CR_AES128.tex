@@ -148,13 +148,18 @@
 	 \verb|./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh"|\\
 	 \verb|-e test.txt -out sortie.txt|
 	 le programme va effectué l'encryptage du fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| en utilisant la nonce \verb|azertyuiopqsdfgh| pour le chiffrement CTR et \verb|sortie.txt| comme fichier de sortie d'encryptage.
-	 
+	 \\\\
 	 Mais comment cela se passe dans le code ?
+	 \\\\
+	 Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) qui contient toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
 	 
-	 Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|azertyuiopqsdfgh|. On lance donc la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| \\
-	 qui créer la clé de tour et lance la fonction : \\
+	 On lance ensuit la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| \\
+	 
+	 
+	 qui créer la clé de tour et lance : \\
 	 \verb|loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key,|
-	 \verb| int turns)|
+	 \verb| int turns)|. \verb|loop_ctr| qui utilise la fonction :\\
+	 \verb|aes(int **matrix, int **extended_key, int turns)| qui effectue enfin l'AES-128 avec les fonction \verb|turn| et \verb|last turn|.
 	
 	
 	
