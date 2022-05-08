@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  8 MAY 2022 23:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.1)  9 MAY 2022 00:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -438,50 +438,56 @@ ended_key,
  []
 
 
-Overfull \hbox (37.64713pt too wide) in paragraph at lines 147--155
+Overfull \hbox (37.64713pt too wide) in paragraph at lines 147--158
 [][]\T1/lmtt/m/n/12 test.txt []\T1/lmr/m/n/12 avec la clé maitre [][]\T1/lmtt/m
 /n/12 "aes128 clemaitre" []\T1/lmr/m/n/12 en uti-li-sant la nonce [][]\T1/lmtt/
 m/n/12 azertyuiopqsdfgh
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--155
+Underfull \hbox (badness 10000) in paragraph at lines 147--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--155
+Underfull \hbox (badness 10000) in paragraph at lines 147--158
 
  []
 
 
-Overfull \hbox (6.52153pt too wide) in paragraph at lines 147--155
+Overfull \hbox (6.52153pt too wide) in paragraph at lines 147--158
 [][]\T1/lmtt/m/n/12 test.txt []\T1/lmr/m/n/12 avec la clé maitre [][]\T1/lmtt/m
 /n/12 "aes128 clemaitre" []\T1/lmr/m/n/12 et la nonce [][]\T1/lmtt/m/n/12 "azer
 tyuiopqsdfgh"[]\T1/lmr/m/n/12 .
  []
 
 
-Overfull \hbox (30.37857pt too wide) in paragraph at lines 147--155
+Overfull \hbox (30.37857pt too wide) in paragraph at lines 147--158
 \T1/lmr/m/n/12 mer en ma-trices. Pour cela on uti-lise : [][]\T1/lmtt/m/n/12 in
 it_plaintext(FILE *file, char *filename)
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
 
+Overfull \hbox (10.89104pt too wide) in paragraph at lines 147--158
+[][]\T1/lmtt/m/n/12 aes_128(struct init_matrix *init, int **master_key, int **n
+once) []\T1/lmr/m/n/12 qui ef-
  []
 
 
-Overfull \hbox (38.69655pt too wide) in paragraph at lines 159--163
+Overfull \hbox (38.69655pt too wide) in paragraph at lines 147--158
 [][]\T1/lmtt/m/n/12 loop_ctr(struct chained_matrix *chained, int **matrix, int 
 **extended_key,
  []
 
 
-Overfull \hbox (2.00458pt too wide) in paragraph at lines 159--163
-[][]\T1/lmtt/m/n/12 aes(int **matrix, int **extended_key, int turns) []\T1/lmr/
-m/n/12 qui ef-fec-tue en-fin l'AES-
+Overfull \hbox (21.66356pt too wide) in paragraph at lines 147--158
+\T1/lmr/m/n/12 fi-chier de sor-tie avec [][]\T1/lmtt/m/n/12 write_to_file(struc
+t init_matrix *init, char *outfile)[]\T1/lmr/m/n/12 . 
+ []
+
+[6]
+Overfull \hbox (56.95206pt too wide) in paragraph at lines 159--159
+[]$[]$  
  []
 
 [7] (./CR_AES128.aux) ) 
@@ -492,7 +498,7 @@ Here is how much of TeX's memory you used:
  19761 multiletter control sequences out of 15000+600000
  590449 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 34i,6n,35p,691b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,6n,35p,688b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr
 /share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/
 lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/
@@ -502,7 +508,7 @@ type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pub
 lic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on CR_AES128.pdf (7 pages, 160280 bytes).
+Output written on CR_AES128.pdf (7 pages, 161105 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream
