@@ -1,5 +1,6 @@
 #include "tools.h"
 
+// Créer des matrices de taille n et m.
 int **create_matrix(int n, int m)
 {
     int **matrix = calloc(m, sizeof(int*));
@@ -11,6 +12,7 @@ int **create_matrix(int n, int m)
     return matrix;
 }
 
+// Permet de copier une matrices dans une autre matrice.
 void copy_matrix(int **matrix, int **new_matrix)
 {
     for (int i = 0; i < 4; i++)
@@ -22,6 +24,7 @@ void copy_matrix(int **matrix, int **new_matrix)
     }
 }
 
+// Permet de libérer la mémoire des matrices malloc.
 void free_matrix(int **matrix, int n)
 {
     for (int i =0; i < n; i++)
@@ -31,6 +34,7 @@ void free_matrix(int **matrix, int n)
     free(matrix);
 }
 
+// Permet d'afficher une matrice.
 void print_matrix(int **matrix, int n, int m)
 {
     for (int i =0; i < n; i++)
@@ -44,6 +48,7 @@ void print_matrix(int **matrix, int n, int m)
 
 }
 
+// Permet d'afficher une liste chainé de matrice.
 void print_box(struct chained_matrix *n)
 {
      while(n->next)

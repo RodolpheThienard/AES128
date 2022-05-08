@@ -1,13 +1,20 @@
 #include "plaintext.h"
 
+// Cette fonction va lire le fichier donné en argument et transformer le texte en matrice 4*4.
+// Si le fichier contient un nombre non multiple de 16, elle va remplir les espaces manquants
+// de façon a n'avoir que des matrices 4*4 pleines. Avec ces matrices l'on créer une liste chainée
+// qui sera utilisé dans les autres fonctions.
+// Les structures des matrices sont dans le fichier tools.h
 struct init_matrix *init_plaintext(FILE *file, char *filename)
 {
+     // On ouvre le fichier et on regarde le nombre de matrices nécessaire.
      struct stat *file_stat = calloc(1, sizeof(struct stat));
      stat(filename, file_stat);
      int size = file_stat->st_size;
      int matrix_amount = size/16;
      if(size%16 != 0) matrix_amount++;
 
+     // On créer la liste chainé de matrice avec le nombre exacte de matrice.
      struct chained_matrix *chained= calloc(1, sizeof(struct chained_matrix));
      struct init_matrix *init = calloc(1, sizeof(struct init_matrix));
      init->init = chained;
@@ -38,6 +45,7 @@ struct init_matrix *init_plaintext(FILE *file, char *filename)
      
 }
 
+// Convertit les chaines de caractère en matrice.
 int **str_to_matrix(char *key)
 {
      int **output = create_matrix(4, 4);
@@ -48,6 +56,7 @@ int **str_to_matrix(char *key)
      return output;
 }
 
+// Ecrit la liste chainée de matrice dans le fichier de sortie
 int write_to_file(struct init_matrix *init, char *outfile)
 {
      FILE *output_file = fopen(outfile, "w");

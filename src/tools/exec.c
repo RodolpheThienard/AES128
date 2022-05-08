@@ -1,5 +1,6 @@
 #include "exec.h"
 
+// Effectue l'AES-128 finale avec le chiffrement CTR
 void aes_128(struct init_matrix *init, int **master_key, int **nonce)
 {
      int **extended_key = create_matrix(4, 44);
@@ -12,6 +13,7 @@ void aes_128(struct init_matrix *init, int **master_key, int **nonce)
      free_matrix(extended_key, 44);
 }
 
+// Effectue l'attaque sur l'AES-128 de 4 tours.
 void aes_attack(int **master_key, int **nonce)
 {
      int **extended_key = create_matrix(4, 44);

@@ -87,21 +87,22 @@ int command(int argc, char **argv)
 // error_display permet l'affiche des erreurs en fonctions de la sortie de command.
 void error_display(int error)
 {
+    int toggler = 0;
     switch(error)
     {
         case 0:
             break;
         case 1:
             printf("Error, insufisant argument !\n");
-            goto help;
+            toggler = 1;
             break;
         case 2:
             printf("Error, Bad Format !\n");
-            goto help;
+            toggler = 1;
             break;
         case 3:
             printf("Welcome in the help list !\n");
-            goto help;
+            toggler = 1;
             break;
         case 4:
             printf("Error, Bad file's path !\n");
@@ -112,17 +113,17 @@ void error_display(int error)
         case 6:
             printf("Error, Bad nonce's format !\nThe nonce need to be in 128bits (16 chars)\nGenerate it with ./main -nonce\n");
             break;
-        case 100:
-            help:
-            printf("Usage : ./main [KEY] [NONCE] [OPTION...] \n");
-            printf("\t-nonce    \tGenerate random nonce, no argument is require!\n\t\t\tex: ./main -nonce\n");
-            printf("\t-a        \tAttack mode\n");
-            printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
-            printf("\t-out file \toutput filename, ONLY FOR -enc option\n");
-            printf("\t-h        \tHelp page\n");
-            break;
         default:
             break;
+    }
+    if(toggler)
+    {
+        printf("Usage : ./main [KEY] [NONCE] [OPTION...] \n");
+        printf("\t-nonce    \tGenerate random nonce, no argument is require!\n\t\t\tex: ./main -nonce\n");
+        printf("\t-a        \tAttack mode\n");
+        printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
+        printf("\t-out file \toutput filename, ONLY FOR -enc option\n");
+        printf("\t-h        \tHelp page\n");
     }
     
 }
