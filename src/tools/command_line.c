@@ -3,12 +3,19 @@
 #include "tools.h"
 #include "../nonce/nonce.h"
 
+// La fonction command qui comme son nom l'inquide effectue la gestion des commandes.
 int command(int argc, char **argv)
 {
+    // On verifie le nombre d'arguments et l'arguments souhaité. 
+    // La fonction returnera un nombre en fonction de la commande et effectura les différentes actions possibles.
+    // Càd l'encryptage/decrypatge, l'attaque, génération d'une nonce ou le nom du fichier de sortie.
+
+    // -h pour help
     if(!strcmp(argv[1], "-h"))
     {
         return 3;
     }
+    // -nonce pour générer une nonce aléatoire
     if(!strcmp(argv[1], "-nonce"))
     {
         char *nonce = get_nonce();
@@ -23,6 +30,7 @@ int command(int argc, char **argv)
     int **nonce = str_to_matrix(argv[2]);
     for(int i = 2; i < argc; i++)
     {
+        // -a pour l'attaque.
         if(!strcmp(argv[i], "-a"))
         {
             if(i == argc - 1) return 1;
@@ -30,13 +38,16 @@ int command(int argc, char **argv)
             aes_attack(key, nonce);
 
         }
+
+        // -e pour l'encryptage/décryptage par l'AES-128 et le CTR.
         if(!strcmp(argv[i], "-e"))
         {
-            
+            // On ouvre le fichier de lecture
             if(i == argc - 1) return 1;
             FILE *file = fopen(argv[i+1], "r");
             if(!file) return 4;
             
+            // On créer le fichier de sortie
             char *outfile = calloc(11, sizeof(char));
             strcpy(outfile, "output.txt");
             for(int j = 0; j < argc; j++)
@@ -51,10 +62,11 @@ int command(int argc, char **argv)
                 }
             }
 
-            
+            // On effectue l'encryptage du fichier
             struct init_matrix *all_text = init_plaintext(file, argv[i+1] );
             aes_128(all_text, key, nonce);
-
+            
+            // On recopie le resultat dans le fichier de sortie
             write_to_file(all_text, outfile);
 
             free_matrix(key,4);
@@ -72,6 +84,7 @@ int command(int argc, char **argv)
     return 0;
 }
 
+// error_display permet l'affiche des erreurs en fonctions de la sortie de command.
 void error_display(int error)
 {
     switch(error)
