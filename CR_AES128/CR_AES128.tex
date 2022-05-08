@@ -141,7 +141,7 @@
 	\section{Chiffrement CTR}
 	
 	Pour faire le chiffrement CTR nous utilisons une fonction\\ \verb|counter_mode(int matrix, int extended_key, int **plaintext, int turns)| qui après avoir fait les tours d'AES sur une matrice, XOR cette matrice avec une autre matrice contenant 16 bits de texte clair. Cette fonction est ensuite utilisé dans la fonction \\
-	\verb| loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle nous place à la fin du message clair et qui effectue la fonction \verb|counter_mode| avec les bouts de texte clair autant de fois qu'il y'a de bouts.
+	\verb| loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle, nous place au début d'une liste chainée(ici le message clair) et effectue la fonction \verb|counter_mode| avec les bouts de 16 bits de texte clair, autant de fois qu'il y'a de bouts.
 	
 	\section{L'AES-128}
 	Après avoir tapé la commande : \\
@@ -153,7 +153,7 @@
 	 \\\\
 	 Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) qui contient toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
 	 
-	 On lance ensuit la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| \\
+	 On lance ensuite la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| \\
 	 
 	 
 	 qui créer la clé de tour et lance : \\
