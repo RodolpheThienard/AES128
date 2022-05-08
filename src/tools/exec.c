@@ -23,6 +23,7 @@ void aes_attack(int **master_key, int **nonce)
 
      struct init_matrix *attack = define_attack_matrix();
 
+
      struct chained_matrix *matrix = attack->init;
      for(int i = 0; i < 256; i++)
      {
