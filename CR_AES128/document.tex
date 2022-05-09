@@ -1,61 +1,57 @@
-\documentclass[french, 12pt]{article}
-\usepackage[utf8]{inputenc}
+\documentclass[10pt, a4paper]{report}
 \usepackage{titling}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[a4paper]{geometry}
-\usepackage{babel}
 \usepackage{graphicx}
-\usepackage{amsmath}
-\graphicspath{ {./screenshots/} }
+\usepackage[a4paper]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{listings}
 
-\usepackage[explicit]{titlesec}
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
 
-\titleformat{\section}
-{\normalfont\normalsize\bfseries\centering}{}{0em}{\MakeUppercase{#1}}
-
-\newcommand{\subtitle}[1]{%
-	\posttitle{%
-		\par\end{center}
-	\begin{center}\LARGE#1\end{center}
-	\vskip0.5em}%
+\lstdefinestyle{CStyle}{
+	backgroundcolor=\color{backgroundColour},   
+	commentstyle=\color{mGreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{mGray},
+	stringstyle=\color{mPurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=C
 }
 
-\title{UE IN608N (CRYPTO): Attaque intégrale sur une
-	version réduite d’un AES-128 }
-\subtitle{Rapport IN608}
-\author{\hspace{-2cm}Docherty Ronan, Ejjed Zakaria, Gago Jérémy, Guerin Raphaël, Thienard Rodolphe}
+\title{\centering{\includegraphics[height=6cm]{logo.jpg}\newline \huge \textbf{UE IN608N (CRYPTO): Attaque intégrale sur une
+			version réduite d’un AES-128 }}}
 \date{10 Mai 2022}
-
+\author{Docherty Ronan, Ejjed Zakaria, Gago Jérémy, Guerin Raphaël, Thienard Rodolphe}
 
 \begin{document}
-	\maketitle
-	\newpage
 	
-	\renewcommand{\contentsname}{Sommaire} 
+	\begin{titlingpage}
+		\maketitle
+	\end{titlingpage}
+	
+	\renewcommand\contentsname{Sommaire}
+	\renewcommand\chaptername{Chapitre}
 	\tableofcontents
 	
-	\newpage
-
-	\section{\underline{Introduction}}
-
+	\chapter{Introduction}
+	
 	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C.
 	Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128.
 	
-	\part{\underline{Gestion des commandes et Makefile}}	
-	
-	Tout d'abord pour lancer le programme il vous suffit de taper \verb|make| dans le terminal. La commande \verb|make| vous affiche les différents arguments a mettre et les modes disponibles. Les arguments disponibles sont les suivant :
-	\begin{enumerate}
-		\item -a : qui permet de faire l'attaque.
-		\item -e : qui permet de faire l'encryptage et le décryptage d'un fichier.
-		\item -out : qui permet de nommer le fichier de sortie.
-		\item -h : qui permet d'afficher les aides.
-		\item -nonce : qui génère un nombre aléatoire pour le CTR.
-	\end{enumerate}
-	Dans le \verb|Makefile| il existe déjà des commandes types comme \verb|make enc| qui effectue un encryptage sur le fichier \verb|matrices.txt|.
-	Nous gérons aussi les erreurs possibles d'arguments, ainsi si les arguments nécessaire ne sont pas présent un message d'erreur apparaîtra.
-	 
-	\part{\underline{Implémentation de l'AES-128}}
+	\chapter{AES-128}
 	
 	Un tour d'AES-128 est composé de 4 fonctions : 
 	
@@ -65,23 +61,23 @@
 		\item MelangeColonnes : Mélanges les colonnes de la matrice d'état.
 		\item AjouteCleTour : Ajoute la clé de tour à la matrice d'état.
 	\end{enumerate}
-  	 
-	 Nous commencerons donc par la fonction SubOctet puisque c'est la première fonction du tour.
 	
-	\section{SubOctet}
-
+	Nous commencerons donc par la fonction SubOctet puisque c'est la première fonction du tour.
+	
+	\section{Suboctet}
+	
 	La fonction \verb|suboctet(int **matrix)| nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
-		
-	\section{DecaleLignes}
+	
+	\section{Decale ligne}
 	
 	La fonction \verb|decale_lignes(int **matrix);| permet de décaler les lignes de la matrice d'état en fonction de la ligne. Pour faire cela on créer une matrices (\verb|int **|) temporaire qui stockera le décalage des lignes. Ces modifications serons recopié dans la matrices d'état.
 	
-	\section{MelangeColonnes}
+	\section{Melange colone}
 	
 	La fonction \verb|melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice. Les opérations sont les suivantes : \\\\
 	Avec B{x,y} l'octet contenu dans la ligne x et la colonne y de la matrice entré en argument, B' étant la matrice résultant des opérations,
 	\begin{math}
-		 2\star B{x,y}  
+		2\star B{x,y}  
 	\end{math}
 	correspondant à l'octet renvoyé par la case de \verb|operation_double|, à la ligne égale à la première partie de l'octet renvoyé par B{x,y} et égale à la colonne de la deuxième partie de cet octet, idem pour 
 	\begin{math}
@@ -114,9 +110,8 @@
 		\end{math} \\
 		La dernière prendra la valeur de: l'octet renvoyé par la case correspondant à l'octet de la ligne 0 dans \verb|operation_triple| XOR l'octet de la ligne 1 XOR l'octet de la ligne 2 XOR  l'octet renvoyé par la case correspondant à l'octet de la ligne 3 dans \verb|operation_double|
 	\end{enumerate}
-
-	\section{AjouteCleTour}
 	
+	\section{Ajout cle tour}
 	La fonction \verb|addroundkey(int **matrix, int **key);| fait un XOR entre la matrice d'état courante et la matrice de la clé de tour.
 	
 	\section{Les Tours}
@@ -138,26 +133,58 @@
 	\subsection{Clé de Tour}
 	Pour générer la clé de Tour nous avons besoin d'étendre la clé de maitre de 128 bits à 1408 bits. Puis chaque portion de 128 bits de la clé maitre étendue deviens une clé de tour. Comme il y a dix tours il y a 10 clé de tour, plus une pour le dernier tour. La clé de tour est donc généré chaque tour par la fonction \verb|key_extension(int **master_key, int **extended_key)| qui à partir de la clé maitre effectue un SubOctet sur la RotationOctet d'une clé tampon puis un XOR avec les constantes Rcon. L'action RotationOctet est effectué dans \verb|rotation_left(int *tampon)| et les constantes Rcon dans un variable du même nom.
 	
-	\section{Chiffrement CTR}
-	
+	\section{Mode de chiffrement}
 	Pour faire le chiffrement CTR nous utilisons une fonction\\ \verb|counter_mode(int matrix, int extended_key, int **plaintext, int turns)| qui après avoir fait les tours d'AES sur une matrice, XOR cette matrice avec une autre matrice contenant 16 bits de texte clair. Cette fonction est ensuite utilisé dans la fonction \\
 	\verb| loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle, nous place au début d'une liste chainée(ici le message clair) et effectue la fonction \verb|counter_mode| avec les bouts de 16 bits de texte clair, autant de fois qu'il y'a de bouts.
 	
-	\section{L'AES-128}
+	\section{NONCE}
+	Le nonce ou number used once, est un nombre aléatoire. Il a pour utiliter de rendre le chiffrement unique comme la cle maitre. 
+	
+	\chapter{Attaque sur AES-128 4 tours}
+	
+	\section{Matrice inverse}
+	Nous avons mis en place un calcul nous permettant de calculer la matrice inverse de AES\_TABLE
+	\begin{lstlisting}[style=CStyle]
+		int *foo = calloc(256, 4);
+		int *tmp = aes_table;
+		for(int i = 0; i < 256; i++)
+		{
+			*(foo + tmp[i]) = i;
+		}
+		
+		for(int j = 0; j < 16; j++)
+		{
+			for(int i = 0; i< 16; i++)
+			{
+				printf("0x%02X,", foo[j*16 + i]);
+			}
+			printf("\n");
+		}
+		free(foo);
+	\end{lstlisting}
+
+	\chapter{Compilation}
+	Tout d'abord pour lancer le programme il vous suffit de taper \verb|make| dans le terminal. La commande \verb|make| vous affiche les différents arguments a mettre et les modes disponibles. Les arguments disponibles sont les suivant :
+	\begin{enumerate}
+		\item -a : qui permet de faire l'attaque.
+		\item -e : qui permet de faire l'encryptage et le décryptage d'un fichier.
+		\item -out : qui permet de nommer le fichier de sortie, par defaut: "output.txt".
+		\item -h : qui permet d'afficher les aides.
+		\item -nonce : qui génère un nombre aléatoire pour le CTR.
+	\end{enumerate}
+	Dans le \verb|Makefile| il existe déjà des commandes types comme \verb|make enc| qui effectue un encryptage sur le fichier \verb|matrices.txt|.
+	Nous gérons aussi les erreurs possibles d'arguments, ainsi si les arguments nécessaire ne sont pas présent un message d'erreur apparaîtra.
+	\\\\
 	Après avoir tapé la commande : \\
-	 \verb|./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh"|\\
-	 \verb|-e test.txt -out sortie.txt|
-	 le programme va effectué l'encryptage du fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| en utilisant la nonce \verb|azertyuiopqsdfgh| pour le chiffrement CTR et \verb|sortie.txt| comme fichier de sortie d'encryptage.
-	 \\\\
-	 Mais comment cela se passe dans le code ?
-	 \\\\
-	 Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) contenant toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
-	 On lance ensuite la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| qui effectue l'AES-128 complet utilisant les différentes fonctions expliqué précédemment. Tout d'abord \verb|aes_128| créer la clé de tour avec la fonction \verb|key_extension| puis lance la fonction : \\ \verb|loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key,|
-	 \verb| int turns)| qui s'occupe de faire l'AES avec ces 10 tours et fait le chiffrement CTR du resultat.
-	 Une fois cela fait \verb|aes_128| se termine et renvoi la liste chainée de matrice contenant le chiffré du message clair. On peut donc écrire le chiffré dans le fichier de sortie avec \verb|write_to_file(struct init_matrix *init, char *outfile)|.
-	
-	\part{\underline{Attaque Intégrale AES-128 sur 4 tours}}
-	
-	
-	
+	\verb|./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh"|\\
+	\verb|-e test.txt -out sortie.txt|
+	le programme va effectué l'encryptage du fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| en utilisant la nonce \verb|azertyuiopqsdfgh| pour le chiffrement CTR et \verb|sortie.txt| comme fichier de sortie d'encryptage.
+	\\\\
+	Mais comment cela se passe dans le code ?
+	\\\\
+	Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) contenant toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
+	On lance ensuite la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| qui effectue l'AES-128 complet utilisant les différentes fonctions expliqué précédemment. Tout d'abord \verb|aes_128| créer la clé de tour avec la fonction \verb|key_extension| puis lance la fonction : \\ \verb|loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key,|
+	\verb| int turns)| qui s'occupe de faire l'AES avec ces 10 tours et fait le chiffrement CTR du resultat.
+	Une fois cela fait \verb|aes_128| se termine et renvoi la liste chainée de matrice contenant le chiffré du message clair. On peut donc écrire le chiffré dans le fichier de sortie avec \verb|write_to_file(struct init_matrix *init, char *outfile)|.
+
 \end{document}
