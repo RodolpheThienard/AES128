@@ -21,6 +21,9 @@ void aes_attack(int **master_key, int **nonce)
 
      key_extension(master_key, extended_key);
 
+     print_matrix(extended_key, 44, 4);
+     printf("\n");
+
      // ATTACK
 
      struct init_matrix *attack = define_attack_matrix();

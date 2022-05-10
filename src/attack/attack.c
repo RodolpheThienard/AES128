@@ -65,7 +65,6 @@ struct chained_matrix* copy_chained_matrix(struct chained_matrix *matrix)
 
 void attack_4turns(struct init_matrix *init)
 {
-    int *table = calloc(256, 4);
     int k = 0;
 
     int** tmp = create_matrix(4, 4);
@@ -87,18 +86,18 @@ void attack_4turns(struct init_matrix *init)
             }
             if(xor(head,l/4,l%4)) 
             {
-                table[k] = a;
+
                 tmp[l/4][l%4] = a;
+                if(l == 0) printf("%2x\n", a);
                 k++;
             }
             free_chained_matrix(head);
         }
     }
-    print_matrix(tmp,4,4);
+    //print_matrix(tmp,4,4);
     printf("%d\n",k) ;
     if (k == 0) printf("No solution found\n");
-    else printf("%d\n",table[k-1]) ;
-    free(table);
+    free_matrix(tmp, 4);
 }
 
 int xor(struct chained_matrix *init, int k, int l)
