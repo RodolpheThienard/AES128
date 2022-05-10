@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "../tools/tools.h"
+#include "../suboctet/suboctet.h"
 
 void decale_lignes(int** matrix);
 

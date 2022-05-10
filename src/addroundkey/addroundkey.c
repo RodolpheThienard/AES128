@@ -1,5 +1,3 @@
-/// make fonction which XOR block with key
-#include "../suboctet/suboctet.h"
 #include "addroundkey.h"
 
 // addroundkey effectue la AjouteCléTour

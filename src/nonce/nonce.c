@@ -1,6 +1,4 @@
 #include "nonce.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 // Permet de créer une nonce complétement aléatoire.
 char *get_nonce()

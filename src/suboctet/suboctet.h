@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../tools/tools.h"
 
 
 int **create_list_block(char *str);

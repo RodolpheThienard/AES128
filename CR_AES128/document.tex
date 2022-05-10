@@ -116,7 +116,7 @@
 	
 	\section{Les Tours}
 	
-	Pour les tours d'AES nous avons une fonction \verb|turn(int matrix, int key)|, qui effectue les fonctions précédemment cité (dans le même ordre), nous avons ensuite une fonction  \verb|last_turn(int matrix, int key)| qui effectue les même fonctions que \verb|turn| à part la fonction \verb|melange_colonne| et enfin \\ \verb|aes(int matrix, int extended_key, int turns)| qui effectue un nombre définit de fois la fonction \verb|turn| et qui termine par une itération de \verb|last_turn|, dans notre cas 10 tour.
+	Pour les tours d'AES nous avons une fonction \verb|turn(int matrix, int key)|, qui effectue les fonctions précédemment cité (dans le même ordre), nous avons ensuite une fonction\\  \verb|last_turn(int matrix, int key)| qui effectue les même fonctions que \verb|turn| à part la fonction \verb|melange_colonne| et enfin \\ \verb|aes(int matrix, int extended_key, int turns)| qui effectue un nombre définit de fois la fonction \verb|turn| et qui termine par une itération de \verb|last_turn|, dans notre cas 10 tour.
 	
 	\section{Gestion des clé}
 	
@@ -141,9 +141,21 @@
 	Le nonce ou number used once, est un nombre aléatoire. Il a pour utiliter de rendre le chiffrement unique comme la cle maitre. 
 	
 	\chapter{Attaque sur AES-128 4 tours}
+	\section{L'attaque}
 	
+	Nous cherchons a mettre en application la particularite mise en evidence sur AES-128 a 4 tours. Pour se faire, nous avons mis en place une structure de liste chaine sous la forme : \\
+	\begin{center}
+		\begin{tabular}{4}
+			i 0 0 0 \\ 0 0 0 0 \\ 0 0 0 0\\ 0 0 0 0\\
+		\end{tabular}
+		avec \begin{math}
+			i \in \{0,..,255\}
+		\end{math} \\
+	\end{center}
+
+
 	\section{Matrice inverse}
-	Nous avons mis en place un calcul nous permettant de calculer la matrice inverse de AES\_TABLE
+	Nous avons mis en place un calcul nous permettant de calculer la matrice inverse de AES\_TABLE, la fonction n'est execute qu'une seul fois.
 	\begin{lstlisting}[style=CStyle]
 		int *foo = calloc(256, 4);
 		int *tmp = aes_table;
@@ -162,6 +174,34 @@
 		}
 		free(foo);
 	\end{lstlisting}
+
+	
+	\section{Retrouver la cle K4}
+	La cle K4 est la cle d'encryption du 4eme tour. Pour obtenir cette cle, nous avons besoin de retrouver tous les a 
+	 \begin{math}
+		a \in \{0,..,255\}
+	\end{math} verifiant l'egalite suivante : \\ 
+	\begin{center}
+		\large{\begin{math}
+					\oplus^{255}_{i=0} SubOctetInverse(D_{k,I}^i\oplus a) = 0
+		\end{math}}\\
+	\end{center}
+	
+
+	\section{De K4 a K}
+	Pour reduire la cle K4 a K, nous appliquons la formule de reduction de cle. Faite a partir de cle\_extention, nous avons juste reapplique pour que le Xor s'annule et ainsi retourver les cles inferieurs jusqu'a K.
+	
+	\section{Verification de K}
+	Nous avons maintenant obtenu une cle possible parmis les differentes obtenable. Nous faisons donc une encryption des matrices : \\
+	\begin{center}
+		\begin{tabular}{4}
+			i 0 0 0 \\ 0 0 0 0 \\ 0 0 0 0\\ 0 0 0 0\\
+		\end{tabular}
+		avec \begin{math}
+			i \in \{0,..,255\}
+		\end{math} 
+	\end{center}\\
+	Nous regardons par la suite si les matrices obtenues sont egales aux matrices que nous avons tente de decrypter. Si elles sont egalent, nous avons trouver la cle maitre, sinon, nous recommencons  a partir de l'etape precedente en changeant l'un des 'a' obtenu parmis les colones.
 
 	\chapter{Compilation}
 	Tout d'abord pour lancer le programme il vous suffit de taper \verb|make| dans le terminal. La commande \verb|make| vous affiche les différents arguments a mettre et les modes disponibles. Les arguments disponibles sont les suivant :
@@ -184,7 +224,7 @@
 	\\\\
 	Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) contenant toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
 	On lance ensuite la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| qui effectue l'AES-128 complet utilisant les différentes fonctions expliqué précédemment. Tout d'abord \verb|aes_128| créer la clé de tour avec la fonction \verb|key_extension| puis lance la fonction : \\ \verb|loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key,|
-	\verb| int turns)| qui s'occupe de faire l'AES avec ces 10 tours et fait le chiffrement CTR du resultat.
-	Une fois cela fait \verb|aes_128| se termine et renvoi la liste chainée de matrice contenant le chiffré du message clair. On peut donc écrire le chiffré dans le fichier de sortie avec \verb|write_to_file(struct init_matrix *init, char *outfile)|.
+	\\\verb| int turns)| qui s'occupe de faire l'AES avec ces 10 tours et fait le chiffrement CTR du resultat.
+	Une fois cela fait \verb|aes_128| se termine et renvoi la liste chainée de matrice contenant le chiffré du message clair. On peut donc écrire le chiffré dans le fichier de sortie avec \\ \verb|write_to_file(struct init_matrix *init, char *outfile)|.
 
 \end{document}

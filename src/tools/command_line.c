@@ -1,7 +1,5 @@
 #include "command_line.h"
-#include "exec.h"
-#include "tools.h"
-#include "../nonce/nonce.h"
+
 
 // La fonction command qui comme son nom l'inquide effectue la gestion des commandes.
 int command(int argc, char **argv)
