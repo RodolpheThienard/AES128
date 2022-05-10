@@ -67,13 +67,10 @@ int** attack_4turns(struct init_matrix *init)
 {
     int k = 0;
 
-    int** tmp = create_matrix(4, 4);
-    for(int i = 0; i < 16; i++)
-    {
-        tmp[i/4][i%4] = 0;
-    }
+    int** result = create_matrix(16, 256);
+    int* indices = calloc(16, sizeof(int));
 
-    for (int l = 0; l < 16; l++)
+    for (int l = 0; l < 16; l++) // case par case [k][l], k = l/4 et l = l%4
     {
        for(int a = 0; a < 256; a++)
         {
@@ -81,23 +78,24 @@ int** attack_4turns(struct init_matrix *init)
             struct chained_matrix* head = matrix;
             for(int j = 0; j < 256; j++)
             {
-                suboctet_inverse(matrix->matrix, a);
+                suboctet_inverse(&matrix->matrix[l/4][l%4], a); // on calcule les 256 suboctets inverses
                 matrix = matrix->next;
             }
-            if(xor(head,l/4,l%4)) 
+            if(xor(head,l/4,l%4)) // on xor tout les suboctets inverses
             {
-
-                tmp[l/4][l%4] = a;
-                if(l == 0) printf("%2x\n", a);
+                result[l][indices[l]] = a;
+                if(indices[l] < 255) result[l][indices[l] + 1] = -1;
+                indices[l]++;
+                // if(l==0) printf("a: %2x\n", a);
+                printf("[%d][%d] = %2x\n", l/4, l%4, a);
                 k++;
             }
             free_chained_matrix(head);
         }
     }
-    //print_matrix(tmp,4,4);
-    printf("%d\n",k) ;
+    printf("k: %d\n",k) ;
     if (k == 0) printf("No solution found\n");
-    return tmp;
+    return result;
 }
 
 int xor(struct chained_matrix *init, int k, int l)
@@ -109,12 +107,11 @@ int xor(struct chained_matrix *init, int k, int l)
         matrix = matrix->next;
         output ^= matrix->matrix[k][l]; 
     }
-    if(output != 0) return 0;
-    return 1;
+    return output?0:1;
 }
 
 
-void suboctet_inverse(int **matrix, int a)
+void suboctet_inverse(int* matrix, int a)
 {
      int aes_table_inv[16][16] = {
           {0x52,0x09,0x6A,0xD5,0x30,0x36,0xA5,0x38,0xBF,0x40,0xA3,0x9E,0x81,0xF3,0xD7,0xFB},
@@ -134,12 +131,6 @@ void suboctet_inverse(int **matrix, int a)
           {0xA0,0xE0,0x3B,0x4D,0xAE,0x2A,0xF5,0xB0,0xC8,0xEB,0xBB,0x3C,0x83,0x53,0x99,0x61},
           {0x17,0x2B,0x04,0x7E,0xBA,0x77,0xD6,0x26,0xE1,0x69,0x14,0x63,0x55,0x21,0x0C,0x7D}
      };
-     for(int i = 0;i < 4;i++)
-     {
-          for(int j = 0;j < 4;j++)
-          {
-               matrix[i][j] = *(*aes_table_inv + (matrix[i][j] ^ a));
-          }
-     }
+    *matrix = *(*aes_table_inv + (*matrix ^ a));
 
 }

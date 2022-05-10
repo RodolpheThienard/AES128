@@ -8,7 +8,7 @@ void free_chained_matrix(struct chained_matrix *matrix);
 struct chained_matrix* copy_chained_matrix(struct chained_matrix *matrix);
 int** attack_4turns(struct init_matrix *init);
 int xor(struct chained_matrix *init, int k, int l);
-void suboctet_inverse(int **matrix, int a);
+void suboctet_inverse(int* matrix,int a);
 
 
 #endif
