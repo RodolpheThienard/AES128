@@ -22,29 +22,29 @@ void aes_attack(int **master_key, int **nonce)
      key_extension(master_key, extended_key, 4);
 
                //AFFICHAGE TEMPORAIRE DE MASTER_KEY AND EXTENDED_KEY(4)
-               printf("-----Original Master Key-----\n");
-               for(int i = 0; i < 4; i++)
-               {
-                    printf("\t");
-               for(int j = 0; j < 4; j++)
-               {
-                    printf("%2x ", master_key[i][j]);
-               }
-                    printf("\n");
-               }
-               printf("\n");
-               
-               printf("-----Extended Key 4th turn-----\n");
-               for(int i = 16; i < 20; i++)
-               {
-                    printf("\t");
-                    for(int j = 0; j < 4; j++)
-                    {
-                         printf("%2x ", extended_key[i][j]);
-                    }
-                    printf("\n");
-               }
-               printf("\n");
+     printf("-----Original Master Key-----\n");
+     for(int i = 0; i < 4; i++)
+     {
+          printf("\t");
+     for(int j = 0; j < 4; j++)
+     {
+          printf("%2x ", master_key[i][j]);
+     }
+          printf("\n");
+     }
+     printf("\n");
+     
+     printf("-----Extended Key 4th turn-----\n");
+     for(int i = 16; i < 20; i++)
+     {
+          printf("\t");
+          for(int j = 0; j < 4; j++)
+          {
+               printf("%2x ", extended_key[i][j]);
+          }
+          printf("\n");
+     }
+     printf("\n");
 
      // ATTACK
 
@@ -71,7 +71,7 @@ void aes_attack(int **master_key, int **nonce)
           }
      }
      printf("-Matrice K4-\n");
-     print_matrix(tmpK4, 4,4);
+     print_matrix(K4, 20,4);
 
      int** K = create_matrix(4, 4);
      key_reduction(K,K4,4);

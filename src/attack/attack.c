@@ -1,5 +1,4 @@
 #include "attack.h"
-#include "../tools/tools.h"
 
 /* 
     return struct init_matrix (containing all matrix)
@@ -133,4 +132,52 @@ void suboctet_inverse(int* matrix, int a)
      };
     *matrix = *(*aes_table_inv + (*matrix ^ a));
 
+}
+
+
+int **find_k4(int **key, struct init_matrix *attacked_matrix)
+{
+    int **tmp_key = create_matrix(4, 4);
+    int **master_key = create_matrix(4, 4);
+    int **extended_key = create_matrix(44, 4);
+
+    copy_matrix(tmp_key, key);
+    
+    for(int i = 0; i < 16; i++)
+    {
+        for(int j = 0; j < 256; j++)
+        {
+            if(key[i][j] == -1) 
+            {
+                i++;
+                for(int k = 0; k < 256; k++) 
+                {
+                    if(key[i][k] == tmp_key[i/4][i%4])
+                    {
+                        if(key[i][k+1] == -1)
+                        {
+                            tmp_key[i/4][i%4] = key[i][0];
+                            i++;
+                            k = 0;
+                            continue;
+                        }
+                        tmp_key[i/4][i%4] = key[i][k+1];
+
+                    }
+                }
+                tmp_key[i/4][i%4] = key[i][j];
+                i = 0;
+            }
+            tmp_key[i/4][i%4] = key[i][j];
+
+            key_reduction(master_key, tmp_key, 4);
+            key_extension(master_key, extended_key, 4);
+
+            struct init_matrix *verif = define_attack_matrix(); 
+            
+            aes(verif->init->matrix, extended_key, 4);
+            if(!cmp_matrix(verif->init->matrix, attacked_matrix->init->matrix, 4, 4)) return tmp_key;
+
+        }
+    }
 }

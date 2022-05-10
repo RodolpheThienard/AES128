@@ -14,7 +14,7 @@ enc: $(BIN)
 	./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh" -e matrices.txt -out matrices.txt
 
 att: $(BIN)
-	./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -a matrices.txt
+	./$(BIN) "aes128 0987aitre" "IUIIIIIIIIIIIIII" -a matrices.txt
 
 valgrind:  $(BIN)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt

@@ -9,12 +9,21 @@ void key_reduction(int **master_key, int **extended_key, int turns)
         0x1b, 0x36
     };
 
+    int** key = create_matrix(20, 4);
+    for(int i = 16;i < 20;i++)
+    {
+        for(int j = 0;j < 4;j++)
+        {   
+            key[i][j] = extended_key[i-16][j];
+        }
+    }
+
     // On créer la matrice tampon
     int *tampon = calloc(4, sizeof(int));
     for (int i = (4*(turns+1))-1; i > 3; i--)
     {        
             // On copie la clé étendue dans la clé tampon
-            memcpy(tampon, extended_key[i-1], 16);
+            memcpy(tampon, key[i-1], 16);
             
 
             if (i % 4 == 0) 
@@ -31,7 +40,7 @@ void key_reduction(int **master_key, int **extended_key, int turns)
 
         for(int j = 0; j < 4; j++)
         {
-          extended_key[i-4][j] = extended_key[i][j] ^ tampon[j]; 
+          key[i-4][j] = key[i][j] ^ tampon[j]; 
         }
 
     }
@@ -40,8 +49,9 @@ void key_reduction(int **master_key, int **extended_key, int turns)
     {
         for (int j = 0; j < 4; j++)
         {
-            master_key[i][j] = extended_key[i][j];
+            master_key[i][j] = key[i][j];
         }
     }
     free(tampon);
+    free_matrix(key, 20);
 }
