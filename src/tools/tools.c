@@ -3,11 +3,11 @@
 // Créer des matrices de taille n et m.
 int **create_matrix(int n, int m)
 {
-    int **matrix = calloc(m, sizeof(int*));
+    int **matrix = calloc(n, sizeof(int*));
 
-    for (int i =0; i < m; i++)
+    for (int i =0; i < n; i++)
     {
-        matrix[i] = calloc(n, sizeof(int));
+        matrix[i] = calloc(m, sizeof(int));
     }
     return matrix;
 }
@@ -57,4 +57,20 @@ void print_box(struct chained_matrix *n)
           break;
      }
      print_matrix(n->matrix, 4, 4);
+}
+
+//return 0 if the matrix are the same, 1 otherwise
+int cmp_matrix(int **matrix1, int **matrix2, int n, int m)
+{
+    for (int i =0; i < n; i++)
+    {
+        for (int j =0; j < m; j++)
+        {
+           if(matrix1[i][j] != matrix2[i][j])
+           {
+               return 1;
+           }
+        }
+    }
+    return 0;
 }
