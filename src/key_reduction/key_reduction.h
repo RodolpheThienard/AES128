@@ -1,6 +1,7 @@
 #ifndef KEY_REDUCTION_H
 #define KEY_REDUCTION_H
 
+#include "../tools/tools.h"
 #include "../key_extension/key_extension.h"
 
 

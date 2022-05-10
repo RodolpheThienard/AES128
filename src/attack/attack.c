@@ -94,6 +94,7 @@ int** attack_4turns(struct init_matrix *init)
     }
     printf("k: %d\n",k) ;
     if (k == 0) printf("No solution found\n");
+    free(indices);
     return result;
 }
 
@@ -135,49 +136,81 @@ void suboctet_inverse(int* matrix, int a)
 }
 
 
-int **find_k4(int **key, struct init_matrix *attacked_matrix)
-{
-    int **tmp_key = create_matrix(4, 4);
-    int **master_key = create_matrix(4, 4);
-    int **extended_key = create_matrix(44, 4);
+// int **find_k4(int **key, struct init_matrix *attacked_matrix)
+// {
+//     int **tmp_key = create_matrix(4, 4);
+//     int **master_key = create_matrix(4, 4);
+//     int **extended_key = create_matrix(44, 4);
 
-    copy_matrix(tmp_key, key);
+//     copy_matrix(tmp_key, key);
     
-    for(int i = 0; i < 16; i++)
-    {
-        for(int j = 0; j < 256; j++)
-        {
-            if(key[i][j] == -1) 
-            {
-                i++;
-                for(int k = 0; k < 256; k++) 
-                {
-                    if(key[i][k] == tmp_key[i/4][i%4])
-                    {
-                        if(key[i][k+1] == -1)
-                        {
-                            tmp_key[i/4][i%4] = key[i][0];
-                            i++;
-                            k = 0;
-                            continue;
-                        }
-                        tmp_key[i/4][i%4] = key[i][k+1];
+//     for(int i = 0; i < 16; i++)
+//     {
+//         for(int j = 0; j < 256; j++)
+//         {
+//             if(key[i][j] == -1) 
+//             {
+//                 i++;
+//                 for(int k = 0; k < 256; k++) 
+//                 {
+//                     if(key[i][k] == tmp_key[i/4][i%4])
+//                     {
+//                         if(key[i][k+1] == -1)
+//                         {
+//                             tmp_key[i/4][i%4] = key[i][0];
+//                             i++;
+//                             k = 0;
+//                             continue;
+//                         }
+//                         tmp_key[i/4][i%4] = key[i][k+1];
 
-                    }
-                }
-                tmp_key[i/4][i%4] = key[i][j];
-                i = 0;
-            }
-            tmp_key[i/4][i%4] = key[i][j];
+//                     }
+//                 }
+//                 tmp_key[i/4][i%4] = key[i][j];
+//                 i = 0;
+//             }
+//             tmp_key[i/4][i%4] = key[i][j];
 
-            key_reduction(master_key, tmp_key, 4);
-            key_extension(master_key, extended_key, 4);
+//             key_reduction(master_key, tmp_key, 4);
+//             key_extension(master_key, extended_key, 4);
 
-            struct init_matrix *verif = define_attack_matrix(); 
+//             struct init_matrix *verif = define_attack_matrix(); 
             
-            aes(verif->init->matrix, extended_key, 4);
-            if(!cmp_matrix(verif->init->matrix, attacked_matrix->init->matrix, 4, 4)) return tmp_key;
+//             aes(verif->init->matrix, extended_key, 4);
+//             if(!cmp_matrix(verif->init->matrix, attacked_matrix->init->matrix, 4, 4)) return tmp_key;
 
+//         }
+//     }
+
+int** test_a(int** master_key, int** key){
+    int** result = create_matrix(4, 4);
+    int* indices = calloc(16, sizeof(int));
+    int* maxlength = calloc(16, sizeof(int));
+    int k=0;
+    int ktmp;
+    for(int i=0; i<16; i++){
+        for(int j=0; j<256; j++){
+            if(key[i][j] == -1){
+                maxlength[i] = j;
+            }
         }
     }
+    int** tmp = create_matrix(4, 4);
+    while(cmp_matrix(tmp, master_key,4,4)){
+        ktmp = k;
+        for(int i=0; i<16; i++){
+            indices[i] = ktmp%maxlength[i];
+            // printf("%d", indices[i]);
+            ktmp /= maxlength[i];
+        }
+        // printf("\n");
+        for(int i=0; i<16; i++){    
+            result[i/4][i%4] = key[i][indices[i]];
+        }
+        key_reduction(tmp, result,4);
+        
+        k++;
+    }   
+    return tmp;
 }
+

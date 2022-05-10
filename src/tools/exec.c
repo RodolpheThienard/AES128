@@ -61,17 +61,32 @@ void aes_attack(int **master_key, int **nonce)
 
      int** tmpK4 = attack_4turns(attack);
 
+     int** result = test_a(master_key, tmpK4);
+     if(result != NULL){
+          printf("-----Result-----\n");
+          print_matrix(result, 4, 4);
+     }
+     else printf("No result found\n");
+
+     // int tmp[4][4] =  {
+     //      {0x67, 0x49, 0x4e, 0x7b},
+     //      {0x82, 0x5c, 0x5b, 0x46},
+     //      {0x43, 0x95, 0x88, 0xa6},
+     //      {0x50, 0xb1, 0x1e, 0x09}
+     // };
+
      //on cree une matrice sensé contenir la clé étendu et on place K(4) à la fin
-     int** K4 = create_matrix(20, 4);
-     for(int i = 16;i < 20;i++)
+     int** K4 = create_matrix(4, 4);
+     for(int i = 0;i < 4;i++)
      {
           for(int j = 0;j < 4;j++)
           {   
-               K4[i][j] = tmpK4[(i-16)*4+j][0];
+               K4[i][j] = tmpK4[((i)*4)+j][0];
+               // K4[i][j] = tmp[i-16][j];
           }
      }
      printf("-Matrice K4-\n");
-     print_matrix(K4, 20,4);
+     print_matrix(K4, 4,4);
 
      int** K = create_matrix(4, 4);
      key_reduction(K,K4,4);
@@ -85,8 +100,8 @@ void aes_attack(int **master_key, int **nonce)
      //counter_mode(nonce_matrix, extended_key, attack->init->matrix, 4);
 
      //print_matrix(attack->init->matrix, 4, 4);
-     free_matrix(tmpK4, 4);
-     free_matrix(K4, 20);
+     free_matrix(tmpK4, 16);
+     free_matrix(K4, 4);
      free_matrix(K, 4);
      free_matrix(extended_key, 44);
      free_attack_matrix(attack);
