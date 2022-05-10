@@ -63,14 +63,14 @@ struct chained_matrix* copy_chained_matrix(struct chained_matrix *matrix)
     return new_matrix;
 }
 
-void attack_4turns(struct init_matrix *init)
+int** attack_4turns(struct init_matrix *init)
 {
     int k = 0;
 
     int** tmp = create_matrix(4, 4);
     for(int i = 0; i < 16; i++)
     {
-        tmp[i/4][i%4] = 256;
+        tmp[i/4][i%4] = 0;
     }
 
     for (int l = 0; l < 16; l++)
@@ -97,7 +97,7 @@ void attack_4turns(struct init_matrix *init)
     //print_matrix(tmp,4,4);
     printf("%d\n",k) ;
     if (k == 0) printf("No solution found\n");
-    free_matrix(tmp, 4);
+    return tmp;
 }
 
 int xor(struct chained_matrix *init, int k, int l)
