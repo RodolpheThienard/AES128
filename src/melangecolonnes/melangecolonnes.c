@@ -44,17 +44,23 @@ void melange_colonnes(int **matrix)
         };
 
         //permet d'effectuer les opérations sur les lignes de chaque colonnes de la matrice, les ^ faisant office de XOR
+        int* tmp = calloc(4, sizeof(int));
+
         for (unsigned i = 0; i < 4; ++i)
         {
-            matrix[0][i] =
-                    *(*operation_double + matrix[0][i]) ^ *(*operation_triple + matrix[1][i]) ^ matrix[2][i] ^ matrix[3][i];
-            matrix[1][i] =
-                    matrix[0][i] ^ *(*operation_double + matrix[1][i]) ^ *(*operation_triple + matrix[2][i]) ^ matrix[3][i];
-            matrix[2][i] =
-                    matrix[0][i] ^ matrix[1][i] ^ *(*operation_double + matrix[2][i]) ^ *(*operation_triple + matrix[3][i]);
-            matrix[3][i] =
-                    *(*operation_triple + matrix[0][i]) ^ matrix[1][i] ^ matrix[2][i] ^ *(*operation_double + matrix[3][i]);
+                for (unsigned j = 0; j < 4; ++j)
+                {
+                        tmp[j] = matrix[j][i];
+                }
+                matrix[0][i] =
+                        *(*operation_double + tmp[0]) ^ *(*operation_triple + tmp[1]) ^ tmp[2] ^ tmp[3];
+                matrix[1][i] =
+                        tmp[0] ^ *(*operation_double + tmp[1]) ^ *(*operation_triple + tmp[2]) ^ tmp[3];
+                matrix[2][i] =
+                        tmp[0] ^ tmp[1] ^ *(*operation_double + tmp[2]) ^ *(*operation_triple + tmp[3]);
+                matrix[3][i] =
+                        *(*operation_triple + tmp[0]) ^ tmp[1] ^ tmp[2] ^ *(*operation_double + tmp[3]);
         }
-    
+        free(tmp);  
 }
 

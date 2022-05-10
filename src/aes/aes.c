@@ -27,9 +27,10 @@ void last_turn(int **matrix, int **key)
 void aes(int **matrix, int **extended_key, int turns)
 {
      addroundkey(matrix, extended_key);
-     for(int i = 1; i < turns; i++)
+     int i;
+     for(i = 1; i < turns; i++)
      {
           turn(matrix, extended_key + i*4);
      }
-     last_turn(matrix, extended_key + 40);
+     last_turn(matrix, extended_key + i*4);
 }
