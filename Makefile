@@ -1,7 +1,7 @@
 CFLAGS = -Wall -Wextra -pedantic -std=c99 -g -O3
 OBJS = src/main.o src/decalelignes/decalelignes.o src/suboctet/suboctet.o src/addroundkey/addroundkey.o \
 	src/melangecolonnes/melangecolonnes.o src/tools/tools.o src/key_extension/key_extension.o src/ctr/ctr.o src/aes/aes.o \
-	src/attack/attack.o src/tools/command_line.o src/plaintext/plaintext.o src/tools/exec.o src/nonce/nonce.o
+	src/attack/attack.o src/tools/command_line.o src/plaintext/plaintext.o src/tools/exec.o src/nonce/nonce.o src/key_reduction/key_reduction.o
 BIN = src/main
 
 run: $(BIN)
