@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void key_extension(int **master_key, int **extended_key);
+void key_extension(int **master_key, int **extended_key, int turns);
 int *rotation_left(int *tampon);
 int *suboctect_tampon(int *tampon);
 

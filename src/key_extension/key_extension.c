@@ -50,7 +50,7 @@ int *suboctect_tampon(int *tampon)
 }
 
 // La fonction ExtensionCle qui effectue l'extension de la clé maitre.
-void key_extension(int **master_key, int **extended_key)
+void key_extension(int **master_key, int **extended_key,int turns)
 {
      // On affecte les valeurs à la clé étendue
      for (int i = 0; i < 4; i++)
@@ -63,7 +63,7 @@ void key_extension(int **master_key, int **extended_key)
 
      // On créer la matrice tampon
      int *tampon = calloc(4, sizeof(int));
-     for (int i = 4; i < 4 * (10 + 1); i++)
+     for (int i = 4; i < 4 * (turns + 1); i++)
      {         
                // On copie la clé étendue dans la clé tampon
                memcpy(tampon, extended_key[i-1], 16);
@@ -130,40 +130,40 @@ int *suboctect_tampon_inv(int *tampon)
      return tampon;
 }
 
-void key_reduction(int **master_key, int **extended_key)
-{
-     for (int i = 0; i < 4; i++)
-     {
-          for (int j = 0; j < 4; j++)
-          {
-               extended_key[i][j] = master_key[i][j];
-          }
-     }
+// void key_reduction(int **master_key, int **extended_key)
+// {
+//      for (int i = 0; i < 4; i++)
+//      {
+//           for (int j = 0; j < 4; j++)
+//           {
+//                extended_key[i][j] = master_key[i][j];
+//           }
+//      }
 
-     // On créer la matrice tampon
-     int *tampon = calloc(4, sizeof(int));
-     for (int i = 4; i < 4 * (10 + 1); i++)
-     {         
-               // On copie la clé étendue dans la clé tampon
-               memcpy(tampon, extended_key[i-1], 16);
+//      // On créer la matrice tampon
+//      int *tampon = calloc(4, sizeof(int));
+//      for (int i = 4; i < 4 * (10 + 1); i++)
+//      {         
+//                // On copie la clé étendue dans la clé tampon
+//                memcpy(tampon, extended_key[i-1], 16);
 
-               if (i % 4 == 0) 
-               {
-                    // On effectue SubOctet(RotationOctet(tampon))
-                    tampon = suboctect_tampon(rotation_right(tampon));
-                    for(int j = 0; j < 4; j++)
-                    {
-                         // On fait le Xor
-                         tampon[j] ^= rcon[j / 4];
-                    }
-               }
+//                if (i % 4 == 0) 
+//                {
+//                     // On effectue SubOctet(RotationOctet(tampon))
+//                     tampon = suboctect_tampon(rotation_right(tampon));
+//                     for(int j = 0; j < 4; j++)
+//                     {
+//                          // On fait le Xor
+//                          tampon[j] ^= rcon[j / 4];
+//                     }
+//                }
           
 
-          for(int j = 0; j < 4; j++)
-          {
-               extended_key[i][j] = extended_key[i - 4][j] ^ tampon[j]; 
-          }
+//           for(int j = 0; j < 4; j++)
+//           {
+//                extended_key[i][j] = extended_key[i - 4][j] ^ tampon[j]; 
+//           }
 
-     }
-     free(tampon);
-}
+//      }
+//      free(tampon);
+// }
