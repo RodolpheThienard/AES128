@@ -68,11 +68,11 @@
 	
 	La fonction \verb|suboctet(int **matrix)| nous permet de substituer l'octet contenu dans une case de notre matrice, à l'aide de la table de substitution de l'AES, qui nous donnera un octet différent du précédent.
 	
-	\section{Decale ligne}
+	\section{Decale lignes}
 	
 	La fonction \verb|decale_lignes(int **matrix);| permet de décaler les lignes de la matrice d'état en fonction de la ligne. Pour faire cela on créer une matrices (\verb|int **|) temporaire qui stockera le décalage des lignes. Ces modifications serons recopié dans la matrices d'état.
 	
-	\section{Melange colone}
+	\section{Melange colonnes}
 	
 	La fonction \verb|melange_colonnes(int **matrix)| permet, à l'aide de deux matrices( \verb|operation_double| et \verb|operation_triple|), d'effectuer certaines opérations pour donner de nouvelles valeurs aux lignes de chaque colonne de notre matrice. Les opérations sont les suivantes : \\\\
 	Avec B{x,y} l'octet contenu dans la ligne x et la colonne y de la matrice entré en argument, B' étant la matrice résultant des opérations,
@@ -138,11 +138,11 @@
 	\verb| loop_ctr(struct chained_matrixchained, int matrix, int extended_key,| \verb|int turns)| qui quant à elle, nous place au début d'une liste chainée(ici le message clair) et effectue la fonction \verb|counter_mode| avec les bouts de 16 bits de texte clair, autant de fois qu'il y'a de bouts.
 	
 	\section{NONCE}
-	Le nonce ou number used once, est un nombre aléatoire. Il a pour utiliter de rendre le chiffrement unique comme la cle maitre. 
+	Le nonce ou number used once, est un nombre aléatoire. Il a pour utiliter de rendre le chiffrement unique comme la cle maitre. Dans notre programme, nous avons decide de le generer a partir du random genere par le kernel linux au demarage. Si celui-ci n'est pas generer ou pas correctement, il bloque le demarrage de l'OS jusqu'a optenir une bonne generation. Il est considere comme etant un vrai aleatoire. Il utilise pour se generer differents nombre aleatoire issue du hardware. 
 	
 	\chapter{Attaque sur AES-128 4 tours}
 	\section{L'attaque}
-	
+	On ne connait pas la cle maitre donc pour retrouver on doitr avoir le meme chiffre
 	Nous cherchons a mettre en application la particularite mise en evidence sur AES-128 a 4 tours. Pour se faire, nous avons mis en place une structure de liste chaine sous la forme : \\
 	\begin{center}
 		\begin{tabular}{4}
@@ -213,18 +213,12 @@
 		\item -nonce : qui génère un nombre aléatoire pour le CTR.
 	\end{enumerate}
 	Dans le \verb|Makefile| il existe déjà des commandes types comme \verb|make enc| qui effectue un encryptage sur le fichier \verb|matrices.txt|.
-	Nous gérons aussi les erreurs possibles d'arguments, ainsi si les arguments nécessaire ne sont pas présent un message d'erreur apparaîtra.
+	Nous gérons les erreurs possibles d'arguments, ainsi que les arguments nécessaire qui ne sont pas présent.
 	\\\\
 	Après avoir tapé la commande : \\
-	\verb|./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh"|\\
-	\verb|-e test.txt -out sortie.txt|
-	le programme va effectué l'encryptage du fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| en utilisant la nonce \verb|azertyuiopqsdfgh| pour le chiffrement CTR et \verb|sortie.txt| comme fichier de sortie d'encryptage.
+	\verb|./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh" e test.txt -out sortie.txt|\\
+	Le programme va effectué l'encryptage du fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| en utilisant la nonce \verb|azertyuiopqsdfgh| pour le chiffrement CTR et \verb|sortie.txt| comme fichier de sortie d'encryptage.
 	\\\\
-	Mais comment cela se passe dans le code ?
-	\\\\
-	Tous d'abord la fonction \verb|commande| comprend que l'on veut encrypter (\verb|-e|) le fichier \verb|test.txt| avec la clé maitre \verb|"aes128 clemaitre"| et la nonce \verb|"azertyuiopqsdfgh"|. A ce moment là le programme doit récupérer le message à encrypter et le transformer en matrices. Pour cela on utilise : \verb|init_plaintext(FILE *file, char *filename)| qui justement transforme le message en une liste chainée (\verb|struct init_matrix|) contenant toutes les matrices créer. Si jamais le message contient un nombre non multiple de 16, la fonction se charge de remplir la matrice non pleine pour pouvoir effectuer correctement l'AES.
-	On lance ensuite la fonction :\\ \verb|aes_128(struct init_matrix *init, int **master_key, int **nonce)| qui effectue l'AES-128 complet utilisant les différentes fonctions expliqué précédemment. Tout d'abord \verb|aes_128| créer la clé de tour avec la fonction \verb|key_extension| puis lance la fonction : \\ \verb|loop_ctr(struct chained_matrix *chained, int **matrix, int **extended_key,|
-	\\\verb| int turns)| qui s'occupe de faire l'AES avec ces 10 tours et fait le chiffrement CTR du resultat.
-	Une fois cela fait \verb|aes_128| se termine et renvoi la liste chainée de matrice contenant le chiffré du message clair. On peut donc écrire le chiffré dans le fichier de sortie avec \\ \verb|write_to_file(struct init_matrix *init, char *outfile)|.
+
 
 \end{document}

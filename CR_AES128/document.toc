@@ -1,8 +1,8 @@
 \contentsline {chapter}{\numberline {1}Introduction}{2}{}%
 \contentsline {chapter}{\numberline {2}AES-128}{3}{}%
 \contentsline {section}{\numberline {2.1}Suboctet}{3}{}%
-\contentsline {section}{\numberline {2.2}Decale ligne}{3}{}%
-\contentsline {section}{\numberline {2.3}Melange colone}{3}{}%
+\contentsline {section}{\numberline {2.2}Decale lignes}{3}{}%
+\contentsline {section}{\numberline {2.3}Melange colonnes}{3}{}%
 \contentsline {section}{\numberline {2.4}Ajout cle tour}{4}{}%
 \contentsline {section}{\numberline {2.5}Les Tours}{4}{}%
 \contentsline {section}{\numberline {2.6}Gestion des clé}{4}{}%
@@ -13,7 +13,7 @@
 \contentsline {chapter}{\numberline {3}Attaque sur AES-128 4 tours}{6}{}%
 \contentsline {section}{\numberline {3.1}L'attaque}{6}{}%
 \contentsline {section}{\numberline {3.2}Matrice inverse}{6}{}%
-\contentsline {section}{\numberline {3.3}Retrouver la cle K4}{6}{}%
+\contentsline {section}{\numberline {3.3}Retrouver la cle K4}{7}{}%
 \contentsline {section}{\numberline {3.4}De K4 a K}{7}{}%
 \contentsline {section}{\numberline {3.5}Verification de K}{7}{}%
 \contentsline {chapter}{\numberline {4}Compilation}{8}{}%

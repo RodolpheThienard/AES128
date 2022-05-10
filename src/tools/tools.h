@@ -21,5 +21,6 @@ void print_matrix(int **matrix, int n, int m);
 void free_matrix(int **matrix, int n);
 void print_box(struct chained_matrix *n);
 int cmp_matrix(int **matrix1, int **matrix2, int n, int m);
+void hex_to_str(int **matrix);
 
 #endif

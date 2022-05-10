@@ -74,3 +74,13 @@ int cmp_matrix(int **matrix1, int **matrix2, int n, int m)
     }
     return 0;
 }
+
+void hex_to_str(int **matrix)
+{
+
+    for(int i = 0; i < 16; i++)
+    {
+        printf("%c", matrix[i/4][i%4]);
+    }
+    printf("\n");
+}
