@@ -48,8 +48,9 @@
 	
 	\chapter{Introduction}
 	
-	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C.
-	Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128.
+	Le but de ce Projet était de d'implémenter une version réduite d'un AES-128 avec un mode de chiffrement OFB et/ou CTR en C. Mais aussi et surtout réalisé l'attaque intégrale sur 4 tours de l'AES-128.
+	Le but du projet est de montré les failles de l'AES-128. Lors de notre attaque il nous suffit de 4 tours pour retrouver la clé maitre à partir du chiffré.
+	Aes-128 est courrament utilise de nos jours et tant a se faire remplacer a cause de la croissance de la puissance des ordinateurs. Le projet montre tres bien cet aspect, de part son attaque relativement rapide pour la version 4 tours. 
 	
 	\chapter{AES-128}
 	
@@ -142,7 +143,7 @@
 	
 	\chapter{Attaque sur AES-128 4 tours}
 	\section{L'attaque}
-	On ne connait pas la cle maitre donc pour retrouver on doitr avoir le meme chiffre
+	On ne connait pas la cle maitre donc pour retrouver on doit avoir le meme chiffrement.
 	Nous cherchons a mettre en application la particularite mise en evidence sur AES-128 a 4 tours. Pour se faire, nous avons mis en place une structure de liste chaine sous la forme : \\
 	\begin{center}
 		\begin{tabular}{4}
@@ -151,7 +152,7 @@
 		avec \begin{math}
 			i \in \{0,..,255\}
 		\end{math} \\
-	\end{center}
+	\end{center}\\
 
 
 	\section{Matrice inverse}

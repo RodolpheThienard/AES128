@@ -24,6 +24,7 @@ void aes_attack(int **master_key)
                //AFFICHAGE TEMPORAIRE DE MASTER_KEY AND EXTENDED_KEY(4)
      printf("-----Original Master Key-----\nOnly for verif, unknown values\n\n");
      print_matrix(master_key, 4, 4);
+     printf("\n");
 
 
      struct init_matrix *attack = define_attack_matrix();

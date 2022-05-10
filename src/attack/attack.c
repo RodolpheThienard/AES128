@@ -86,13 +86,13 @@ int** attack_4turns(struct init_matrix *init)
                 if(indices[l] < 255) result[l][indices[l] + 1] = -1;
                 indices[l]++;
                 // if(l==0) printf("a: %2x\n", a);
-                printf("[%d][%d] = %2x\n", l/4, l%4, a);
+                // printf("[%d][%d] = %2x\n", l/4, l%4, a);
                 k++;
             }
             free_chained_matrix(head);
         }
     }
-    printf("k: %d\n",k) ;
+     printf("Nombre de a trouve: %d\n",k) ;
     if (k == 0) printf("No solution found\n");
     free(indices);
     return result;

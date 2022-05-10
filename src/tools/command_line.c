@@ -53,7 +53,7 @@ int command(int argc, char **argv)
                 {
                     if(j == argc - 1) return 1;
                     if(i == j) return 2;
-                    printf("i : %d\tj : %d\t argc : %d\n", i, j, argc);
+                    // printf("i : %d\tj : %d\t argc : %d\n", i, j, argc);
                     outfile = realloc(outfile, strlen(argv[j+1])+1);
                     strcpy(outfile, argv[j+1]);
                 }
