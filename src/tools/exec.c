@@ -14,7 +14,7 @@ void aes_128(struct init_matrix *init, int **master_key, int **nonce)
 }
 
 // Effectue l'attaque sur l'AES-128 de 4 tours.
-void aes_attack(int **master_key, int **nonce)
+void aes_attack(int **master_key)
 {
      int **extended_key = create_matrix(44, 4);
      
@@ -39,7 +39,7 @@ void aes_attack(int **master_key, int **nonce)
 
      int** tmpK4 = attack_4turns(attack);
 
-     int** result = test_a(master_key, tmpK4, attack);
+     int** result = test_a(tmpK4, attack);
      if(result != NULL){
           printf("-----Result-----\n");
           print_matrix(result, 4, 4);

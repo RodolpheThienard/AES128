@@ -21,25 +21,24 @@ int command(int argc, char **argv)
         free(nonce);
         return 0;
     }
+    int **key = str_to_matrix(argv[1]);
+    if(!strcmp(argv[2], "-a"))
+        {
+            aes_attack(key);
+        }
     if(argc < 3) return 3;
     if(strlen(argv[1]) != 16) return 5;
-    if(strlen(argv[2]) != 16) return 6;
-    int **key = str_to_matrix(argv[1]);
+    
     int **nonce = str_to_matrix(argv[2]);
     for(int i = 2; i < argc; i++)
     {
         // -a pour l'attaque.
-        if(!strcmp(argv[i], "-a"))
-        {
-            if(i == argc - 1) return 1;
-
-            aes_attack(key, nonce);
-
-        }
+        
 
         // -e pour l'encryptage/décryptage par l'AES-128 et le CTR.
         if(!strcmp(argv[i], "-e"))
         {
+            if(strlen(argv[2]) != 16) return 6;
             // On ouvre le fichier de lecture
             if(i == argc - 1) return 1;
             FILE *file = fopen(argv[i+1], "r");
@@ -118,7 +117,7 @@ void error_display(int error)
     {
         printf("Usage : ./main [KEY] [NONCE] [OPTION...] \n");
         printf("\t-nonce    \tGenerate random nonce, no argument is require!\n\t\t\tex: ./main -nonce\n");
-        printf("\t-a        \tAttack mode\n");
+        printf("\t-a        \tAttack mode, only key is require!\n\t\t\tex: ./main [KEY] -a\n");
         printf("\t-e file   \tEncryption/Decryption mode\n\t\t\tUsage: ./main -e foo.txt\n");
         printf("\t-out file \toutput filename, ONLY FOR -enc option\n");
         printf("\t-h        \tHelp page\n");

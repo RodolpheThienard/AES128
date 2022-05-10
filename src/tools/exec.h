@@ -8,6 +8,6 @@
 #include "../key_reduction/key_reduction.h"
 
 void aes_128(struct init_matrix *init, int **master_key, int **nonce);
-void aes_attack(int **master_key, int **nonce);
+void aes_attack(int **master_key);
 
 #endif

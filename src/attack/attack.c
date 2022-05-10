@@ -135,7 +135,7 @@ void suboctet_inverse(int* matrix, int a)
 
 }
 
-int** test_a(int** master_key, int** key, struct init_matrix *attacked_matrix){
+int** test_a(int** key, struct init_matrix *attacked_matrix){
     int** result = create_matrix(4, 4);
     int* indices = calloc(16, sizeof(int));
     int* maxlength = calloc(16, sizeof(int));

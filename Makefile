@@ -14,20 +14,20 @@ enc: $(BIN)
 	./$(BIN) "aes128 clemaitre" "azertyuiopqsdfgh" -e matrices.txt -out matrices.txt
 
 att: $(BIN)
-	./$(BIN) "aes128_clemaitre" "IUIIIIIIIIIIIIII" -a matrices.txt
+	./$(BIN) "aes128_clemaitre" -a
 
 test: $(BIN)
-	time ./$(BIN) "aes128_clemaitre" "IUIIIIIIIIIIIIII" -a matrices.txt
-	time ./$(BIN) "aes128 clemaitre" "IUIIIIIIIIIIIIII" -a matrices.txt
-	time ./$(BIN) "aes128 0987aitre" "IUIIIIIIIIIIIIII" -a matrices.txt
+	time ./$(BIN) "aes128_clemaitre" -a
+	time ./$(BIN) "aes128 clemaitre" -a
+	time ./$(BIN) "aes128 0987aitre" -a
 
 
 valgrind:  $(BIN)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "thats my kung fu" "IUIIIIIIIIIIIIII" -e matrices.txt -out matrices.txt
 
 valgrind-att: $(BIN)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "aes128_clemaitre" "IUIIIIIIIIIIIIII" -a matrices.txt
-
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes  ./$(BIN) "aes128_clemaitre" -a
+	
 $(BIN): $(OBJS)
 
 clean:
